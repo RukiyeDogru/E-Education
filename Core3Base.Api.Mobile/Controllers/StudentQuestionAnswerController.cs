@@ -14,11 +14,11 @@ namespace Core3Base.Api.Mobile.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentQuestionController : ControllerBase
+    public class StudentQuestionAnswerController : ControllerBase
     {
         private IStudentQuestionAnswerService _StudentQuestionService;
 
-        public StudentQuestionController(IStudentQuestionAnswerService StudentQuestionService)
+        public StudentQuestionAnswerController(IStudentQuestionAnswerService StudentQuestionService)
         {
             _StudentQuestionService = StudentQuestionService;
         }
@@ -27,7 +27,7 @@ namespace Core3Base.Api.Mobile.Controllers
         [SwaggerResponse(200, "", typeof(StudentQuestionAnswer))]
         public IActionResult Get(int id)
         {
-            var StudentQuestionResponse = _StudentQuestionService.GetStudentQuestionById(id);
+            var StudentQuestionResponse = _StudentQuestionService.GetStudentQuestionAnswerById(id);
 
             if (StudentQuestionResponse.IsSucceeded && StudentQuestionResponse.Result != null)
             {
@@ -39,12 +39,14 @@ namespace Core3Base.Api.Mobile.Controllers
 
         [HttpPost("add-StudentQuestion")]
         [SwaggerResponse(200, "", typeof(StudentQuestionAnswer))]
-        public IActionResult Add([FromQuery] StudentQuestionViewModel model)
+        public IActionResult Add([FromQuery] StudentQuestionAnswerViewModel model)
         {
             var StudentQuestionResponse = _StudentQuestionService.Add(new StudentQuestionAnswer
             {
                 StudentId = model.StudentId,
-                QuestionId=model.QuestionId
+                QuestionId=model.QuestionId,
+                AnswerId=model.AnswerId
+               
 
             });
 
@@ -59,9 +61,9 @@ namespace Core3Base.Api.Mobile.Controllers
         }
         [HttpPost("edit-StudentQuestion/{id}")]
         [SwaggerResponse(200, "", typeof(StudentQuestionAnswer))]
-        public IActionResult Edit(int id, StudentQuestionViewModel model)
+        public IActionResult Edit(int id, StudentQuestionAnswerViewModel model)
         {
-            var getStudentQuestion = _StudentQuestionService.GetStudentQuestionById(id);
+            var getStudentQuestion = _StudentQuestionService.GetStudentQuestionAnswerById(id);
 
             if (getStudentQuestion != null && getStudentQuestion.IsSucceeded)
 
@@ -108,12 +110,12 @@ namespace Core3Base.Api.Mobile.Controllers
         }
         [HttpPost]
         [SwaggerResponse(200, "", typeof(List<StudentQuestionAnswer>))]
-        public IActionResult GetStudentQuestions(StudentQuestionFilterModel model)
+        public IActionResult GetStudentQuestions(StudentQuestionAnswerFilterModel model)
         {
             try
 
             {
-                var result = _StudentQuestionService.GetStudentQuestions(model);
+                var result = _StudentQuestionService.GetStudentQuestionAnswers(model);
                 if (result.IsSucceeded)
                 {
                     return Ok(result.Result);

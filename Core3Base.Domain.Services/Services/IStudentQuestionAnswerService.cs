@@ -9,11 +9,11 @@ namespace Core3Base.Domain.Services.Services
 {
    public interface IStudentQuestionAnswerService
     {
-        ServiceResponse<StudentQuestionAnswer> Add(StudentQuestionAnswer StudentQuestion);
-        ServiceResponse<StudentQuestionAnswer> Update(StudentQuestionAnswer StudentQuestion);
+        ServiceResponse<StudentQuestionAnswer> Add(StudentQuestionAnswer StudentQuestionAnswer);
+        ServiceResponse<StudentQuestionAnswer> Update(StudentQuestionAnswer StudentQuestionAnswer);
         ServiceResponse<bool> Delete(int id);
-        ServiceResponse<StudentQuestionAnswer> GetStudentQuestionById(int id);
-        ServiceResponse<List<StudentQuestionAnswer>> GetStudentQuestions(StudentQuestionFilterModel filter);
+        ServiceResponse<StudentQuestionAnswer> GetStudentQuestionAnswerById(int id);
+        ServiceResponse<List<StudentQuestionAnswer>> GetStudentQuestionAnswers(StudentQuestionAnswerFilterModel filter);
 
     }
 }

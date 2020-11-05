@@ -14,19 +14,19 @@ namespace Core3Base.Domain.Services.Impl.Services
 {
     public class StudentQuestionAnswerService : IStudentQuestionAnswerService
     {
-        private readonly IRepository<StudentQuestionAnswer> StudentQuestionRepository;
+        private readonly IRepository<StudentQuestionAnswer> StudentQuestionAnswerRepository;
 
-        public StudentQuestionAnswerService(IRepository<StudentQuestionAnswer> StudentQuestionRepository)
+        public StudentQuestionAnswerService(IRepository<StudentQuestionAnswer> StudentQuestionAnswerRepository)
         {
-            this.StudentQuestionRepository = StudentQuestionRepository;
+            this.StudentQuestionAnswerRepository = StudentQuestionAnswerRepository;
 
         }
-        public ServiceResponse<StudentQuestionAnswer> Add(StudentQuestionAnswer StudentQuestion)
+        public ServiceResponse<StudentQuestionAnswer> Add(StudentQuestionAnswer StudentQuestionAnswer)
         {
             var response = new ServiceResponse<StudentQuestionAnswer>();
-            if (response.Validation(new StudentQuestionValidation().Validate(StudentQuestion)))
+            if (response.Validation(new StudentQuestionValidation().Validate(StudentQuestionAnswer)))
             {
-                response.Result = StudentQuestionRepository.Insert(StudentQuestion);
+                response.Result = StudentQuestionAnswerRepository.Insert(StudentQuestionAnswer);
             }
             return response;
         }
@@ -34,12 +34,12 @@ namespace Core3Base.Domain.Services.Impl.Services
         public ServiceResponse<bool> Delete(int id)
         {
             var response = new ServiceResponse<bool>();
-            var repoResponse = StudentQuestionRepository.GetById(id);
+            var repoResponse = StudentQuestionAnswerRepository.GetById(id);
 
             response.Result = false;
             if (repoResponse != null)
             {
-                StudentQuestionRepository.Delete(repoResponse);
+                StudentQuestionAnswerRepository.Delete(repoResponse);
                 response.Result = true;
             }
             else
@@ -49,25 +49,25 @@ namespace Core3Base.Domain.Services.Impl.Services
             return response;
         }
 
-        public ServiceResponse<StudentQuestionAnswer> GetStudentQuestionById(int id)
+        public ServiceResponse<StudentQuestionAnswer> GetStudentQuestionAnswerById(int id)
         {
             var response = new ServiceResponse<StudentQuestionAnswer>();
 
             response.IsSucceeded = true;
-            response.Result = StudentQuestionRepository.GetById(id);
+            response.Result = StudentQuestionAnswerRepository.GetById(id);
 
             return response;
         }
 
-        public ServiceResponse<List<StudentQuestionAnswer>> GetStudentQuestions(StudentQuestionFilterModel filter)
+        public ServiceResponse<List<StudentQuestionAnswer>> GetStudentQuestionAnswers(StudentQuestionAnswerFilterModel filter)
         {
             var response = new ServiceResponse<List<StudentQuestionAnswer>>();
 
             response.IsSucceeded = true;
 
-            response.RecordsTotal = StudentQuestionRepository.ListQueryable.Count();
-            response.RecordsFiltered = StudentQuestionRepository.ListQueryable.AddSearchFilters(filter).Count();
-            response.Result = StudentQuestionRepository.ListQueryable.AddSearchFilters(filter).AddOrderAndPageFilters(filter).ToList();
+            response.RecordsTotal = StudentQuestionAnswerRepository.ListQueryable.Count();
+            response.RecordsFiltered = StudentQuestionAnswerRepository.ListQueryable.AddSearchFilters(filter).Count();
+            response.Result = StudentQuestionAnswerRepository.ListQueryable.AddSearchFilters(filter).AddOrderAndPageFilters(filter).ToList();
             return response;
         }
 
@@ -76,15 +76,13 @@ namespace Core3Base.Domain.Services.Impl.Services
             var response = new ServiceResponse<StudentQuestionAnswer>();
             if (response.Validation(new StudentQuestionValidation().Validate(StudentQuestion)))
             {
-                StudentQuestionRepository.Detach(StudentQuestion);
+                StudentQuestionAnswerRepository.Detach(StudentQuestion);
 
-                var repositoryResponse = StudentQuestionRepository.GetById(StudentQuestion.Id);
+                var repositoryResponse = StudentQuestionAnswerRepository.GetById(StudentQuestion.Id);
                 if (repositoryResponse != null)
                 {
 
-                    
-
-                    response.Result = StudentQuestionRepository.Update(repositoryResponse);
+                    response.Result = StudentQuestionAnswerRepository.Update(repositoryResponse);
                 }
                 else
                 {
@@ -95,5 +93,7 @@ namespace Core3Base.Domain.Services.Impl.Services
 
             return response;
         }
+
+      
     }
 }

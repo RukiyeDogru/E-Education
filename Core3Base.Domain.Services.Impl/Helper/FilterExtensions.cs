@@ -305,7 +305,7 @@ namespace Core3Base.Domain.Services.Impl.Helper
         }
 
 
-        public static IQueryable<StudentQuestionAnswer> AddSearchFilters(this IQueryable<StudentQuestionAnswer> input, StudentQuestionFilterModel filter)
+        public static IQueryable<StudentQuestionAnswer> AddSearchFilters(this IQueryable<StudentQuestionAnswer> input, StudentQuestionAnswerFilterModel filter)
         {
             if (filter != null)
             {

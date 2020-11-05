@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Core3Base.Domain.Filters
 {
-    public class StudentQuestionFilterModel : FilterModelBase
+    public class StudentQuestionAnswerFilterModel : FilterModelBase
     {
         public string Term { get; set; }
         public string StudentQuestionNameTerm { get; set; }
-        public StudentQuestionFilterModel(DataTableParameters dataTableParameters)
+        public StudentQuestionAnswerFilterModel(DataTableParameters dataTableParameters)
             : base(dataTableParameters)
         {
             if (dataTableParameters.Search?.Value?.Length > 0)
@@ -18,7 +18,7 @@ namespace Core3Base.Domain.Filters
             }
         }
 
-        public StudentQuestionFilterModel()
+        public StudentQuestionAnswerFilterModel()
         {
         }
 
