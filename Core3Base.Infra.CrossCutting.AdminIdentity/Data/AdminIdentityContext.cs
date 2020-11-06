@@ -15,7 +15,6 @@ namespace Core3Base.Infra.CrossCutting.AdminIdentity.Data
     public class AdminIdentityContext : DbContext
     {
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleGroup> RoleGroups { get; set; }
 

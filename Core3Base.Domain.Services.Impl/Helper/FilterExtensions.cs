@@ -90,6 +90,28 @@ namespace Core3Base.Domain.Services.Impl.Helper
 
         }
 
+        public static IQueryable<User> AddSearchFilters(this IQueryable<User> input, UserFilterModel filter)
+        {
+            if (filter != null)
+            {
+                if (filter.UserId > 0)
+                {
+                    input = input.Where(x => x.Id == filter.UserId);
+                }
+                if (filter.EMail?.Length > 0)
+                {
+                    input = input.Where(x => x.EMail.ToLower() == filter.EMail);
+                }
+                if (filter.UserName?.Length > 0)
+                {
+                    input = input.Where(x => x.UserName.ToLower() == filter.UserName.ToLower());
+                }
+            }
+
+            return input;
+
+        }
+
 
         public static IQueryable<Subjects> AddSearchFilters(this IQueryable<Subjects> input, SubjectFilterModel filter)
         {

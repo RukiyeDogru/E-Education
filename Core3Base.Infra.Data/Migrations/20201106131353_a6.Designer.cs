@@ -4,14 +4,16 @@ using Core3Base.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Core3Base.Infra.Data.Migrations
 {
     [DbContext(typeof(Core3BaseContext))]
-    partial class Core3BaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201106131353_a6")]
+    partial class a6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

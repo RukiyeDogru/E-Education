@@ -45,6 +45,8 @@ namespace Core3Base.Infra.Data
 
         public DbSet<Subjects> Subjects { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         private readonly IHostingEnvironment _env;
 
         public Core3BaseContext(

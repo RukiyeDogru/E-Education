@@ -57,6 +57,11 @@ namespace Core3Base.Infra.Data.Repository
         {
             return Entities.FromSqlInterpolated($"{sql}");
         }
+        public T Get(Expression<Func<T, bool>> filter = null)
+        {
+            return this._objectSet.Where(filter).FirstOrDefault();
+
+        }
 
         public IQueryable<T> IncludeMany(params Expression<Func<T, object>>[] includes)
         {

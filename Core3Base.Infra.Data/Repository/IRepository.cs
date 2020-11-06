@@ -13,6 +13,7 @@ namespace Core3Base.Infra.Data.Repository
         IQueryable<T> ListQueryable { get; }
         IQueryable<T> ListQueryableNoTracking { get; }  
         T GetById(object id);
+        T Get(Expression<Func<T, bool>> filter = null);
         T Insert(T entity);
         void Insert(IEnumerable<T> entities);
         T Update(T entity);

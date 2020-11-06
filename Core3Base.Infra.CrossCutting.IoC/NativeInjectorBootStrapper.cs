@@ -25,6 +25,10 @@ namespace Core3Base.Infra.CrossCutting.IoC
             services.AddScoped<IStudentAnswerService, StudentAnswerService>();
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IAnswerService, AnswerService>();
+            services.AddScoped<IQuestionAnswerService, QuestionsAnswerService>();
+            services.AddScoped<IExamService, ExamService>();
+            services.AddScoped<IStudentQuestionAnswerService, StudentQuestionAnswerService>();
+            services.AddScoped<IQuestionExamService, QuestionExamService>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<Core3BaseContext>();
