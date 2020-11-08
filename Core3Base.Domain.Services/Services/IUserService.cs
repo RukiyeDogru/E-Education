@@ -8,7 +8,7 @@ using System.Text;
 namespace Core3Base.Domain.Services.Services
 {
    public interface IUserService
-    {
+   {
         ServiceResponse<User> Add(User user);
         ServiceResponse<User> GetByMail(string email);
         ServiceResponse<User> GetByUserName(string userName);

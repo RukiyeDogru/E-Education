@@ -1,0 +1,95 @@
+﻿
+@model Core3Base.Domain.Model.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="card card-round card-shadowed px-50 py-30 w-400px mb-0" style="max-width: 100%">
+    @*<strong style="text-align: center;font-size: 27px;">@Model.SiteHeader</strong>*@
+    <br />
+    <div class="text-center login-account-preview" id="AccountPreview">
+        <img id="Photo" class="avatar avatar-xxl" style="border-width: 2px;border-color: #ccc;border-style: solid;" src="~/assets/img/avatar/avatar_profile.jpg">
+        <h5 id="FullName" class="mt-3 mb-1"></h5>
+        <p id="DepartmentName" class="text-fade"></p>
+    </div>
+
+    <form id="loginform">
+        <div class="form-group">
+            <label>E-Posta Adresi:</label>
+            <input type="text" class="form-control" asp-for="Email">
+        </div>
+        <div class="form-group">
+            <label>Şifre:</label>
+            <input type="password" class="form-control" asp-for="Password">
+        </div>
+
+        @*<div class="alert alert-danger">
+                <strong>Hata Oluştu!</strong> @Model.ErrorMessage
+                @if (Model.ConfirmationError)
+                {
+                    <br />
+                    <a href="@Url.Action("NewConfirmationEmail", new { eposta = Model.User.Email})" target="_self">Onay E-Postasını tekrar göndermek için tıklayınız.</a>
+                }
+            </div>*@
+
+        <div class="form-group">
+            <button class="btn btn-bold btn-block btn-info" type="submit">OTURUM AÇ</button>
+        </div>
+        <input type="hidden" id="foo" name="foo" />
+
+    </form>
+
+    <!--<p class="text-right text-muted fs-16">
+        <a style="float:left; font-size: 14px;" class="text-success fw-400" href="@Url.Action("Register")">Kayıt ol</a>-->
+        @*<a style="float:right; font-size: 14px;" class="text-danger fw-400" href="@Url.Action("ForgottenPassword")">Şifremi unuttum</a>*@
+    <!--</p>-->
+</div>
+
+@section Scripts{
+    <script src="/assets/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/assets/vendor/jquery-validation/localization/messages_tr.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdY2dYUAAAAAHISLL3yB21nQy554KnXt5Jq63gW"></script>
+
+
+
+    <script>
+        $('form').on('submit',
+            function (e) {
+                e.preventDefault();
+                grecaptcha.ready(function () {
+                    grecaptcha.execute('6LdY2dYUAAAAAHISLL3yB21nQy554KnXt5Jq63gW', { action: 'login' })
+                        .then(function (token) {
+                            $.getJSON("/login/RecaptchaV3Vverify?token="+token,
+                                function(data) {
+                                    console.log(data);
+
+                                    if (data.success == true) {
+                                        $.ajax({
+                                            url: "@Url.Action("Giris","Login")",
+                                            type: "POST",
+                                            data: $('#loginform').serialize(),
+                                            success: function (result) {
+                                                if (result==true) {
+                                                    @*window.location.href = "@Url.Action("Index", "Home")";*@
+                                                } else {
+                                                    debugger;
+                                                    swal({
+                                                        title: 'Hata!',
+                                                        text: result.errorMessage,
+                                                        type: 'error',
+                                                        timer: 2000
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                        });
+                });
+            });
+    </script>
+
+
+    }

@@ -1,0 +1,273 @@
+
+
+.master_apps_icon {
+    width: 40px;
+    height: 40px;
+}
+
+.profile_dosyalar_row {
+    padding: .2rem !important;
+    vertical-align: middle !important;
+}
+
+.profile_dosyalar_img {
+    width: 32px;
+    height: auto;
+}
+
+.yemekmenusu_item {
+    max-width: 70%;
+}
+
+.sidebar-header {
+    background-color: #ff4c4c;
+}
+
+.header-profile-name {
+    margin-top: 18px;
+}
+
+.news-header-background {
+    background-image: url(../img/header/newslist-header-background.jpg);
+}
+
+.search-header-background {
+    background-image: url(../img/header/search-header-background.jpg);
+    background-size: cover;
+}
+
+.meals-header-background {
+    background-image: url(../img/header/mealslist-header-background.jpg);
+}
+
+.books-header-background {
+    background-image: url(../img/header/bookslist-header-background.jpg);
+}
+
+.news_announcement_header {
+    margin: 5px 0px !important;
+}
+
+.login-account-preview {
+    display: none;
+}
+
+.topbar_full {
+    width: 100% !important;
+    font-weight: 500 !important;
+}
+
+.home-tabs-icon-makamprogrami {
+    margin-right: 0px;
+    margin-left: 5px;
+    color: #48b0f7;
+    font-size: large;
+}
+
+.home-tabs-icon-etkinlikler {
+    margin-right: 0px;
+    margin-left: 5px;
+    color: #48b0f7;
+    font-size: large;
+}
+
+.home-tabs-icon-duyurular {
+    margin-right: 0px;
+    margin-left: 5px;
+    color: #48b0f7;
+    font-size: large;
+}
+
+.error {
+    color: red;
+}
+
+input.error {
+    background-color: lightpink;
+}
+
+
+
+.search-item img {
+    float: left;
+    margin-right: 5px;
+}
+
+
+
+
+.search-item a {
+    float: left;
+    font-size: 14px;
+    line-height: 32px;
+    color: #717171;
+    font-weight: normal;
+}
+
+.search-item-group {
+    font-size: 14px;
+    clear: both;
+    text-decoration: underline;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    color: #535353;
+}
+
+.search-pagination {
+    width: 100%;
+    font-style: italic;
+    color: #666;
+    margin-top: 10px;
+    clear: both;
+}
+
+.search-pagination-butttons {
+    width: 100%;
+    text-align: left;
+    clear: both;
+}
+
+.search-ajax-container {
+    width: 100%;
+    background-color: #efefef;
+    margin-top: -5px;
+    display: none;
+    max-height: 500px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.search-description {
+    margin-left: 20px; 
+    border-right-style: solid; 
+    border-right-width: 1px; 
+    border-color: rgba(128, 128, 128, 0.2);
+    min-width: 390px;
+}
+
+.search-item {
+    border-bottom-style: solid;
+    border-bottom-color: rgba(128, 128, 128, 0.2);
+    border-bottom-width: 1px;
+    padding: 5px;
+}
+
+.ytb-bottom-bar {
+    position: fixed;
+    right: 0;
+    width: 100%;
+    left: 0;
+    z-index: 999;
+    height: auto;
+    bottom: 0px;
+    background-color: #3f4a59;
+    margin-bottom: 0;
+    border-width: 1px 0 0;
+}
+
+.ytb-bottom-img {
+    width: 56px;
+    height: 56px;
+    padding: 6px;
+    margin-top: 3px;
+}
+
+.ytb-bottom-a {
+}
+
+.ytb-bottom-li {
+    float: left;
+}
+
+.ytb-bottom-li-first {
+    float: left;
+    margin-left: 90px;
+}
+
+.news-image-custom  {
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    right: 0px;
+    left:0px;
+    bottom:0px;
+    position: absolute;
+    display: inline-block;
+   background: url(img/gradient_news.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@media screen and (max-width: 480px) {
+    .ytb-bottom-bar {
+        display: none;
+    }
+}
+
+
+.usefullink-title {
+    margin-top:20px !important; 
+    padding-left:15px !important;
+    padding-right:15px !important;
+}
+
+.usefullink-div {
+    margin-top:10px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.usefullink-item {
+    padding: 10px !important;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(205, 205, 205, 0.5);
+}
+
+.islem-button {
+    font-size: larger;
+    margin-right: 5px;
+}
+
+.islem-button-lg {
+    font-size: large;
+    margin-right: 5px;
+}
+
+.topbar-item-count {
+    font-size: 10px;
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
+
+.media-danger {
+    background-color: #ffe6ff;
+}
+
+.leftmenu-management-fontcolor {
+    color: #ffb720;
+}
+
+.menu-link .leftmenu-management-dotcolor.dot::after {
+    border-color: #ffb720;
+}
+
+
+@media only screen and (max-width: 840px) {
+    .project-wizard {
+        display:none;
+    }
+    .card-body {
+        padding: 0.5rem !important;
+    }
+}
+
+
+
+
+
