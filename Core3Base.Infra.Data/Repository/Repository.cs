@@ -62,6 +62,11 @@ namespace Core3Base.Infra.Data.Repository
             return this._objectSet.Where(filter).FirstOrDefault();
 
         }
+        public IQueryable<T> AllListQueryable(Expression<Func<T, bool>> filter = null)
+        {
+            return this._objectSet.Where(filter);
+
+        }
 
         public IQueryable<T> IncludeMany(params Expression<Func<T, object>>[] includes)
         {

@@ -11,6 +11,7 @@ namespace Core3Base.Infra.Data.Repository
 
     {
         IQueryable<T> ListQueryable { get; }
+        IQueryable<T> AllListQueryable(Expression<Func<T, bool>> filter = null);
         IQueryable<T> ListQueryableNoTracking { get; }  
         T GetById(object id);
         T Get(Expression<Func<T, bool>> filter = null);

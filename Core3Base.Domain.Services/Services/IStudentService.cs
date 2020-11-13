@@ -4,6 +4,7 @@ using Core3Base.Infra.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Core3Base.Domain.Model;
 
 namespace Core3Base.Domain.Services.Services
 {
@@ -14,6 +15,9 @@ namespace Core3Base.Domain.Services.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<Student> GetStudentById(int id);
         ServiceResponse<List<Student>> GetStudents(StudentFilterModel filter);
+
+        ServiceResponse<DataTablesModel.DataTableReturnModel> GetAllForDatatables(
+            DataTablesModel.DataTableAjaxPostModel model);
 
    }
 }

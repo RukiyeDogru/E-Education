@@ -8,18 +8,20 @@ using Core3Base.Infra.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
+using Core3Base.Domain.Model; 
 
 namespace Core3Base.Domain.Services.Impl.Services
 {
     public class StudentService : IStudentService
     {
         private readonly IRepository<Student> studentRepository;
-        
+
         public StudentService(IRepository<Student> studentRepository)
         {
             this.studentRepository = studentRepository;
-          
+
         }
         public ServiceResponse<Student> Add(Student student)
         {
@@ -57,7 +59,7 @@ namespace Core3Base.Domain.Services.Impl.Services
 
             response.IsSucceeded = true;
             response.Result = studentRepository.GetById(id);
-             
+
             return response;
         }
 
@@ -70,7 +72,7 @@ namespace Core3Base.Domain.Services.Impl.Services
             response.RecordsTotal = studentRepository.ListQueryable.Count();
             response.RecordsFiltered = studentRepository.ListQueryable.AddSearchFilters(filter).Count();
             response.Result = studentRepository.ListQueryable.AddSearchFilters(filter).AddOrderAndPageFilters(filter).ToList();
-             return response;
+            return response;
         }
 
         public ServiceResponse<Student> Update(Student student)
@@ -87,7 +89,7 @@ namespace Core3Base.Domain.Services.Impl.Services
                     repositoryResponse.Surname = student.Surname;
                     repositoryResponse.Email = student.Email;
                     repositoryResponse.ClassId = student.ClassId;
-                
+
                     response.Result = studentRepository.Update(repositoryResponse);
                 }
                 else
@@ -95,6 +97,58 @@ namespace Core3Base.Domain.Services.Impl.Services
                     response.SetError("Veri Bulunamadı");
                 }
 
+            }
+
+            return response;
+        }
+
+        public ServiceResponse<DataTablesModel.DataTableReturnModel> GetAllForDatatables(DataTablesModel.DataTableAjaxPostModel model)
+        {
+            var searchBy = model.search?.value;
+            var take = model.length;
+            var skip = model.start;
+
+            var sortBy = "Id";
+            var sortDir = "desc";
+            if (model.order != null)
+            {
+                sortBy = model.columns[model.order[0].column].data;
+                sortDir = model.order[0].dir.ToLower();
+            }
+
+            var response = new ServiceResponse<DataTablesModel.DataTableReturnModel>(); 
+
+            var repoResponse = studentRepository.AllListQueryable(r => !r.IsDelete).Select(x => new
+            {
+                Id = x.Id,
+                IsActive = x.IsActive,
+                Name = x.Name
+            });
+
+            var totalResultsCount = repoResponse.Count();
+            var filteredResultsCount = repoResponse.Count();
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                repoResponse = repoResponse.Where(r => r.Name.Contains(searchBy));
+                filteredResultsCount = repoResponse.Count();
+            }
+            repoResponse = repoResponse.OrderBy($"{sortBy} {sortDir}").Skip(skip).Take(take);
+             
+            if (repoResponse != null)
+            {
+                response.Result = new DataTablesModel.DataTableReturnModel
+                {
+                    draw = model.draw,
+                    recordsTotal = totalResultsCount,
+                    recordsFiltered = filteredResultsCount,
+                    data = repoResponse.ToList()
+                };
+
+            }
+            else
+            {
+                response.SetError("Kayıt bulunamadı");
             }
 
             return response;
