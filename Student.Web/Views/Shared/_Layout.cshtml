@@ -1,48 +1,101 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] E-Education</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Student.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Student.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+    <link rel="icon" href="/assets/img/logo_EventManagementSystem.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i|Dosis:300,500" rel="stylesheet">
+    @*<link href="~/Assets/plugins/Kendo/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="~/Assets/plugins/Kendo/styles/kendo.metro.min.css" rel="stylesheet" />*@
+    <link href="/assets/css/core.min.css" rel="stylesheet">
+    <link href="/assets/css/app.min.css" rel="stylesheet">
+    <link href="/assets/css/style.min.css" rel="stylesheet">
+    <link href="/assets/plugins/skycons/skycons.css" rel="stylesheet" />
+    <link href="/assets/vendor/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="/assets/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/swiper/css/swiper.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/datetimepicker/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="/assets/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/responsive.bootstrap.min.css" />
+    <link href="~/assets/css/select2-bootstrap-css/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/assets/js/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/assets/js/summernote/summernote-bs4.min.css" rel="stylesheet" />
+    @RenderSection("Styles", false)
+    <style>
+
+        .modal-footer {
+            display: none !important;
+        }
+
+        .modal-footer2 {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="preloader">
+        <div class="spinner-dots">
+            <span class="dot1"></span>
+            <span class="dot2"></span>
+            <span class="dot3"></span>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    </div>
+    <aside class="sidebar sidebar-expand-sm">
+        @await Component.InvokeAsync("Sidebar")
+    </aside>
+    <header class="topbar">
+    </header>
+    <main class="main-container">
+        <div class="main-content">
+            @RenderBody()
+        </div>
+        <footer class="site-footer">
+        </footer>
+    </main>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+    <script src="/assets/js/core.min.js" data-provide="chartjs"></script>
+    <script src="~/assets/js/select2/js/select2.js"></script>
+    <script src="~/assets/js/select2/js/select2.min.js"></script>
+    <script src="~/assets/js/summernote/summernote-lite.js"></script>
+    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/vendor/moment/moment-with-locales.min.js"></script>
+    <script src="/assets/vendor/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/assets/vendor/swiper/js/swiper.min.js"></script>
+    <script src="/assets/vendor/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+    <script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/assets/js/summernote/summernote-bs4.min.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script src="/Assets/js/script/partials/trial.js"></script>
+    @*<script src="~/Assets/plugins/Kendo/js/kendo.all.min.js"></script>
+        <script src="~/Assets/plugins/Kendo/js/kendo.aspnetmvc.min.js"></script>
+        <script src="~/Assets/plugins/Kendo/js/messages/kendo.messages.tr-TR.min.js"></script>
+        <script src="~/Assets/plugins/Kendo/js/cultures/kendo.culture.tr-TR.min.js"></script>*@
+
+    <script src="/assets/js/dataTables.buttons.min.js"></script>
+    @*<script src="/assets/js/jszip.min.js"></script>
+        <script src="/assets/js/pdfmake.min.js"></script>
+        <script src="/assets/js/vfs_fonts.js"></script>*@
+    <script src="/assets/js/buttons.html5.min.js"></script>
+    <script src="/assets/js/dataTables.responsive.min.js"></script>
+
+    @RenderSection("Scripts", false)
+    <script>
+        $(function () {
+            $('div[data-url]').each(function (i, item) {
+                $(item).load($(item).data('url'));
+            });
+        })
+    </script>
+
 </body>
 </html>

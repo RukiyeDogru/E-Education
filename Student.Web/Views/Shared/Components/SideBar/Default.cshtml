@@ -1,0 +1,52 @@
+﻿ 
+<header class="sidebar-header" style="background-color: #fa9c28;">
+
+    <span class="logo">
+        <a href="/"></a>
+
+    </span>
+    <span class="sidebar-toggle-fold"></span>
+</header>
+<nav class="sidebar-navigation">
+    <ul class="menu"> 
+        <li class="menu-category">ÖĞRENCİ YÖNETİMİ</li>
+
+        <li class="menu-item">
+            <a class="menu-link" href="@Url.Action("List", "Student")">
+                <span class="icon fa fa-balance-scale"></span>
+                <span class="title">Öğrenciler</span>
+            </a>
+        </li>
+        @*Sistem Yönetimi - Yöneticilerin Kullanıcıların Görebileceği*@
+
+        <li class="leftmenu-management-bgcolor">
+            <a class="menu-link" href="#">
+                <span class="icon fa fa-gears leftmenu-management-fontcolor"></span>
+                <span class="title leftmenu-management-fontcolor">Sistem Yönetimi</span>
+                <span class="arrow"></span>
+            </a>
+
+            <ul class="menu-submenu">
+
+
+                <li class="menu-item">
+                    <a class="menu-link" href="@Url.Action("AuthorizationList", "Authorization")">
+                        <span class="dot leftmenu-management-dotcolor"></span>
+                        <span class="title leftmenu-management-fontcolor">Kullanıcı Yetki Grupları</span>
+                    </a>
+                </li>
+
+
+                <li class="menu-item">
+                    <a class="menu-link" href="@Url.Action("UserList", "Authorization")">
+                        <span class="dot leftmenu-management-dotcolor"></span>
+                        <span class="title leftmenu-management-fontcolor">Kullanıcılar</span>
+                    </a>
+                </li>
+
+
+            </ul>
+        </li>
+
+    </ul>
+</nav>

@@ -16,14 +16,10 @@ namespace Student.Web.Controllers
         {
             _studentService = studentService;
         }
-
-        public IActionResult Index()
+         
+        public IActionResult List()
         {
-            StudentFilterModel studentFilterModel = new StudentFilterModel();
-            studentFilterModel.Term = "";
-            studentFilterModel.OrderByDescending = "DateCreated";
-            var StudentList = _studentService.GetStudents(studentFilterModel);
-            ViewBag.StudentList = StudentList.Result.Take(9);
+             
             return View();
         }
     }
