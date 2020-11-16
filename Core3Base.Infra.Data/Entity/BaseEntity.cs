@@ -17,7 +17,7 @@ namespace Core3Base.Infra.Data.Entity
     {
         public bool IsDeletable { get; set; } = true;
         //[HiddenInput(DisplayValue = false)]
-        public DateTime? DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; }=DateTime.Now;
 
         //[HiddenInput(DisplayValue = false)]
         public DateTime? DateModified { get; set; }

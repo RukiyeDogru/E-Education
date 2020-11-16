@@ -531,6 +531,9 @@ $.validator.addMethod( "giroaccountNL", function( value, element ) {
 	return this.optional( element ) || /^[0-9]{1,7}$/.test( value );
 }, "Please specify a valid giro account number" );
 
+$.validator.addMethod('decimal', function (value, element) {
+    return this.optional(element) || /^((\d+(\\,\d{0,2})?)|((\d*(\,\d{1,2}))))$/.test(value);
+}, "Please enter a correct number, format 0.00");
 /**
  * IBAN is the international bank account number.
  * It has a country - specific format, that is checked here too

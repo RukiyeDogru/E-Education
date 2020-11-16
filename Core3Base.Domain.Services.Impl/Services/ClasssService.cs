@@ -60,6 +60,28 @@ namespace Core3Base.Domain.Services.Impl.Services
             return response;
 
         }
+        public ServiceResponse<List<Classs>> GetAllActiveClasss()
+        {
+            var response = new ServiceResponse<List<Classs>>();
+            response.IsSucceeded = true;
+            response.RecordsTotal = classsRepository.ListQueryable.Count();
+            response.RecordsFiltered = classsRepository.ListQueryable.AddSearchFilters(new ClasssFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).Count();
+            response.Result = classsRepository.ListQueryable.AddSearchFilters(new ClasssFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).AddOrderAndPageFilters(new ClasssFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).ToList();
+            return response;
+
+        }
         public ServiceResponse<Classs> GetClasssById(int id)
         {
             var response = new ServiceResponse<Classs>();

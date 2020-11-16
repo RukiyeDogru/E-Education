@@ -24,6 +24,7 @@
     <link href="~/assets/css/select2-bootstrap-css/select2-bootstrap.css" rel="stylesheet" />
     <link href="~/assets/js/select2/css/select2.css" rel="stylesheet" />
     <link href="~/assets/js/summernote/summernote-bs4.min.css" rel="stylesheet" />
+    <link href="~/Assets/jquery-loading-master/loading.css" rel="stylesheet" />
     @RenderSection("Styles", false)
     <style>
 
@@ -37,7 +38,7 @@
     </style>
 </head>
 
-<body>
+<body id="bodyLoading">
     <div class="preloader">
         <div class="spinner-dots">
             <span class="dot1"></span>
@@ -57,9 +58,6 @@
         <footer class="site-footer">
         </footer>
     </main>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
     <script src="/assets/js/core.min.js" data-provide="chartjs"></script>
     <script src="~/assets/js/select2/js/select2.js"></script>
     <script src="~/assets/js/select2/js/select2.min.js"></script>
@@ -87,6 +85,7 @@
         <script src="/assets/js/vfs_fonts.js"></script>*@
     <script src="/assets/js/buttons.html5.min.js"></script>
     <script src="/assets/js/dataTables.responsive.min.js"></script>
+<script src="~/Assets/jquery-loading-master/loading.js"></script>
 
     @RenderSection("Scripts", false)
     <script>
@@ -95,6 +94,15 @@
                 $(item).load($(item).data('url'));
             });
         })
+        
+        function LoadingRun() {
+            $('#bodyLoading').loading({
+                message: 'Please wait...'
+            });
+        }
+        function LoadingStop() {
+            $('#bodyLoading').loading('stop');
+        }
     </script>
 
 </body>

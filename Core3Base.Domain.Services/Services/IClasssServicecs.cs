@@ -14,6 +14,7 @@ namespace Core3Base.Domain.Services.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<Classs> GetClasssById(int id);
         ServiceResponse<List<Classs>> GetClasss(ClasssFilterModel filter);
+        ServiceResponse<List<Classs>> GetAllActiveClasss();
 
     }
 }

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +23,17 @@
     <ProjectReference Include="..\Core3Base.Infra.CrossCutting.AdminIdentity\Core3Base.Infra.CrossCutting.AdminIdentity.csproj" />
     <ProjectReference Include="..\Core3Base.Infra.CrossCutting.IoC\Core3Base.Infra.CrossCutting.IoC.csproj" />
     <ProjectReference Include="..\Core3Base.Infra.Data\Core3Base.Infra.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\bootstrap-year-calendar-1.1.0\css\" />
+    <Folder Include="wwwroot\assets\bootstrap-year-calendar-1.1.0\js\languages\" />
+    <Folder Include="wwwroot\assets\Config\ImageProcessor\" />
+    <Folder Include="wwwroot\assets\img\" />
+    <Folder Include="wwwroot\assets\jquery-loading-master\" />
+    <Folder Include="wwwroot\assets\js\highcharts\" />
+    <Folder Include="wwwroot\assets\vendor\font-awesome\less\" />
+    <Folder Include="wwwroot\assets\vendor\font-awesome\scss\" />
   </ItemGroup>
 
 </Project>

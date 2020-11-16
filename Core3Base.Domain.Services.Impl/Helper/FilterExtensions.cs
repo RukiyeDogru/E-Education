@@ -220,7 +220,15 @@ namespace Core3Base.Domain.Services.Impl.Helper
                 {
                     input = input.Where(x => x.ClassName.ToLower().Contains(filter.ClasssNameTerm.ToLower()));
                 }
-               
+
+                if (filter.Active!=null)
+                {
+                    input = input.Where(x => x.IsActive==filter.Active);
+                }
+                if (filter.Deleted != null)
+                {
+                    input = input.Where(x => x.IsDelete == filter.Deleted);
+                }
             }
 
             return input;

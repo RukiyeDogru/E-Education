@@ -89,6 +89,7 @@ namespace Core3Base.Domain.Services.Impl.Services
                     repositoryResponse.Surname = student.Surname;
                     repositoryResponse.Email = student.Email;
                     repositoryResponse.ClassId = student.ClassId;
+                    repositoryResponse.IsActive = student.IsActive;
 
                     response.Result = studentRepository.Update(repositoryResponse);
                 }
@@ -122,7 +123,8 @@ namespace Core3Base.Domain.Services.Impl.Services
             {
                 Id = x.Id,
                 IsActive = x.IsActive,
-                Name = x.Name
+                Name = x.Name,
+                Surname=x.Surname
             });
 
             var totalResultsCount = repoResponse.Count();

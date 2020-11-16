@@ -32,8 +32,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th> 
+                                <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
                                 <th>Name</th>
+                                <th>Sur Name</th>
                                 <th>Active</th>
                                 <th>Operations</th>
                             </tr>
@@ -70,13 +71,14 @@
                     type: 'POST'
                 },
                 "columns": [
-                    { "data": "Id" }, 
-                    { "data": "Name" },  
-                {
-                    "data": "Id",
+                    { "data": "id" }, 
+                    { "data": "name" },  
+                    { "data": "surname" },  
+                    {
+                    "data": "id",
                     "render": function (data, type, row) {
                         var isActive = "";
-                        if (row.IsActive == true) {
+                        if (row.isActive == true) {
                             isActive = "checked=";
 
                         }
@@ -88,7 +90,7 @@
                     }
                 },
                 {
-                    "data": "Id",
+                    "data": "id",
                     "render": function (data, type, row) {
                         var editUrl = ReplaceParameters('@Url.Action("StudentEdit", new{StudentId = -1})', data);
                         var editButton = '<a title="Edit" data-provide="modaler" data-size="lg"  data-title=" Student Form"  data-url="' +
@@ -132,7 +134,8 @@
             }).then(function () {
                 $.ajax({
                     url: ReplaceParameters('@Url.Action("StudentDelete", new{id = -1})', id), success: function (result) {
-                        if (result == "True") {
+                        if (result) {
+                            
                             swal({
                                 title: 'Successful!',
                                 text: 'Registration successfully deleted',
@@ -157,8 +160,8 @@
           $.ajax({
               url: '@Url.Action("StudentActiveChange")?id=' + id + '&active=' + active,
               success:function(result) {
-
-                  if (result == "True") {
+                  
+                  if (result ) {
                       swal({
                           title: 'Successful!',
                           text: 'Change applied.',
@@ -214,7 +217,8 @@
                         url: ReplaceParameters('@Url.Action("SelectedDelete", new{ids = -1})', silinecekler),
                         method: "GET",
                         success: function (response) {
-                            if (response == "True") {
+                            
+                            if (response ) {
                                 swal({
                                     title: 'Successful!',
                                     text: 'Change applied.',

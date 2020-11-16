@@ -9,6 +9,8 @@ namespace Core3Base.Domain.Filters
     {
         public string Term { get; set; }
         public string ClasssNameTerm { get; set; }
+        public bool? Active { get; set; } 
+        public bool? Deleted { get; set; } 
         public ClasssFilterModel(DataTableParameters dataTableParameters)
             : base(dataTableParameters)
         {
