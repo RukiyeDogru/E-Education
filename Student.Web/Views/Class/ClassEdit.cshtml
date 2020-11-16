@@ -1,0 +1,129 @@
+﻿@model ClassModel
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <form data-provide="jqueryform" id="ClassForm" action="@Url.Action("ClassEdit",new{ClassId = Model.Classs.Id})" method="post">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Class Name </label>
+                                @Html.TextBoxFor(model => model.Classs.ClassName, new { @class = "form-control", placeholder = "Enter Class Name", required = "" })
+                                @Html.HiddenFor(model => model.Classs.Id)
+                            </div>
+                            @*<div class="form-group">
+                                <label>Surname </label>
+                                @Html.TextBoxFor(model => model.Student.Surname, new { @class = "form-control", placeholder = "Enter Student Surname", required = "" })
+                            </div>
+                            <div class="form-group">
+                                <label>Email </label>
+                                @Html.TextBoxFor(model => model.Student.Email, new { @class = "form-control", placeholder = "Enter Student Email", required = "" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>Student Class Name</label>
+                                @Html.DropDownListFor(model => model.Student.ClassId, new SelectList(Model.ClasGroup, "Id", "ClassName"), "Choose Student Class", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })*@
+                           
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="switch switch-lg switch-success">
+                                @Html.CheckBoxFor(model => model.Classs.IsActive, new { @class = "parent pr2" })
+                                <span class="switch-indicator"></span>
+                                <span class="switch-description">
+                                    Active
+                                </span>
+                            </label>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer2">
+                    <button type="button" class="btn btn-label btn-danger" data-dismiss="modal"><label><i class="fa fa-close"></i></label> Close</button>
+                    <button type="submit" class="btn btn-label btn-success"><label><i class="fa fa-save"></i></label> Save</button>
+                </div>
+            </div>
+        </form>
+    
+    </div>
+</div>
+<script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<link href="/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+<script src="/assets/vendor/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/Assets/vendor/jquery-validation/additional-methods.js"></script>
+<script data-provide="sweetalert">
+    $(function () {
+        $("#ClassForm").validate({
+            ignore: ".ignore",
+            rules: {
+                "@(Html.NameFor(model => model.Classs.ClassName))": { required: true },
+                @*"@(Html.NameFor(model => model.Student.Email))": { required: true },
+                "@(Html.NameFor(model => model.Student.Surname))": { required: true },
+                "@(Html.NameFor(model => model.Student.ClassId))": { required: true}*@
+                }
+            });
+    });
+
+</script>
+
+<script>
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        if ($("#ClassForm").valid()) {
+            LoadingRun();
+            $(this).ajaxSubmit({
+                success: function (responseText) {
+                    LoadingStop();
+                    if (responseText.value.validErrors || responseText.value.errorMessage) {
+
+                        var errorMessage = "";
+                        $.each(responseText.value.validErrors, function (i, l) {
+                            errorMessage += l.message + "<br>";
+                        });
+                        if (responseText.value.errorMessage)
+                            errorMessage += responseText.value.errorMessage + "<br>";
+                        swal({
+                            title: 'Error!',
+                            html: errorMessage,
+                            type: 'error'
+                        });
+                    } else {
+
+                        swal({
+                            title: 'Successful!',
+                            text: 'Operation saved successfull',
+                            type: 'success',
+                            timer: 2000
+                        });
+                        $('.close').click();
+                        ReloadTable();
+                    }
+                },
+                error: function (responseText) {
+                    LoadingStop();
+                    var errorMessage = "";
+                    $.each(responseText.value.validErrors, function (i, l) {
+                        errorMessage += l.message + "<br>";
+                    });
+                    if (responseText.value.errorMessage)
+                        errorMessage += responseText.value.errorMessage + "<br>";
+                    swal({
+                        title: 'Error!',
+                        html: errorMessage,
+                        type: 'error'
+                    });
+                },
+                url: $(this).attr("action")
+            });
+        }
+
+    });
+</script>
+
+

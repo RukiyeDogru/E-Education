@@ -8,11 +8,9 @@ namespace Student.Web.Models
 {
     public class TeacherModel
     {
-
         public Teacher Teacher { get; set; }
         public List<Teacher> Teachers { get; set; }
         public IEnumerable<Lesson> LessonGroup { get; set; }
-
 
 
     }
