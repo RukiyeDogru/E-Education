@@ -14,6 +14,8 @@ namespace Core3Base.Domain.Services.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<Lesson> GetLessonById(int id);
         ServiceResponse<List<Lesson>> GetLessons(LessonFilterModel filter);
+        ServiceResponse<List<Lesson>> GetAllActiveLesson();
+
 
     }
 }

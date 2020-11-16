@@ -53,6 +53,29 @@ namespace Core3Base.Domain.Services.Impl.Services
 
         }
 
+        public ServiceResponse<List<Lesson>> GetAllActiveLesson()
+        {
+            var response = new ServiceResponse<List<Lesson>>();
+            response.IsSucceeded = true;
+            response.RecordsTotal = lessonRepository.ListQueryable.Count();
+            response.RecordsFiltered = lessonRepository.ListQueryable.AddSearchFilters(new LessonFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).Count();
+            response.Result = lessonRepository.ListQueryable.AddSearchFilters(new LessonFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).AddOrderAndPageFilters(new LessonFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).ToList();
+            return response;
+
+        }
+
         public ServiceResponse<Lesson> GetLessonById(int id)
         {
             var response = new ServiceResponse<Lesson>();

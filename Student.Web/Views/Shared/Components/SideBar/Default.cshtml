@@ -8,13 +8,19 @@
     <span class="sidebar-toggle-fold"></span>
 </header>
 <nav class="sidebar-navigation">
-    <ul class="menu"> 
+    <ul class="menu">
         <li class="menu-category">ÖĞRENCİ YÖNETİMİ</li>
 
         <li class="menu-item">
             <a class="menu-link" href="@Url.Action("StudentList", "Student")">
                 <span class="icon fa fa-balance-scale"></span>
                 <span class="title">Öğrenciler</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a class="menu-link" href="@Url.Action("TeacherList", "Teacher")">
+                <span class="icon fa-fa-balance-scale"></span>
+                <span class="title">Öğretmenler</span>
             </a>
         </li>
         @*Sistem Yönetimi - Yöneticilerin Kullanıcıların Görebileceği*@

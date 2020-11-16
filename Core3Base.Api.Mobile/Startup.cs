@@ -32,7 +32,7 @@ namespace Core3Base.Api.Mobile
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Oðulcan Esved Erdinç", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rukiye Doðru", Version = "v1" });
             });
             services.AddLogging(loggingBuilder =>
             {

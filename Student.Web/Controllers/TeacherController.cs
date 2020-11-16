@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core3Base.Domain.Filters;
 using Core3Base.Domain.Model;
 using Core3Base.Domain.Services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,35 +9,37 @@ using Student.Web.Models;
 
 namespace Student.Web.Controllers
 {
-    [Route("ogrenci")]
-    public class StudentController : Controller
+    public class TeacherController : Controller
     {
-        private IStudentService _studentService;
-        private IClasssService _classsService;
+        private ITeacherService _teacherService;
+        private ILessonService _lessonService;
 
-        public StudentController(IStudentService studentService, IClasssService classsService)
+
+        public TeacherController(ITeacherService teacherService, ILessonService lessonService)
         {
-            _studentService = studentService;
-            _classsService = classsService;
+            _teacherService = teacherService;
+            _lessonService = lessonService;
+
         }
 
         [Route("liste")]
         [HttpGet]
-        public ActionResult StudentList()
+        public ActionResult TeacherList()
         {
-            var model = new StudentModel
+            var model = new TeacherModel
             {
-                Students = new List<Core3Base.Infra.Data.Entity.Student>()
+                Teachers = new List<Core3Base.Infra.Data.Entity.Teacher>()
             };
             return View(model);
         }
-        [Route("student-query")]
+
+        [Route("teacher-query")]
         [HttpPost]
-        public JsonResult StudentListQuery(DataTablesModel.DataTableAjaxPostModel model)
+        public JsonResult TeacherListQuery(DataTablesModel.DataTableAjaxPostModel model)
         {
             try
             {
-                var data = _studentService.GetAllForDatatables(model);
+                var data = _teacherService.GetAllForDatatables(model);
                 if (data.IsSucceeded)
                 {
                     return Json(data.Result);
@@ -54,70 +55,69 @@ namespace Student.Web.Controllers
 
         [Route("ekle")]
         [HttpGet]
-        public ActionResult StudentCreate()
+        public ActionResult TeacherCreate()
         {
-            return RedirectToAction("StudentEdit", new { StudentId = 0 });
+            return RedirectToAction("TeacherEdit", new { TeacherId = 0 });
         }
 
 
-        [Route("duzenle/{StudentId}")]
+        [Route("duzenle/{TeacherId}")]
         [HttpGet]
-        public ActionResult StudentEdit(int StudentId)
+        public ActionResult TeacherEdit(int TeacherId)
         {
             try
             {
-
-                var model = new StudentModel
+                var model = new TeacherModel
                 {
-                    Student = StudentId == 0 ? new Core3Base.Infra.Data.Entity.Student
+                    Teacher = TeacherId == 0 ? new Core3Base.Infra.Data.Entity.Teacher
                     {
                         IsActive = true,
                         Id = 0
-                    } : _studentService.GetStudentById(StudentId).Result,
-                    ClasGroup = _classsService.GetAllActiveClasss().Result
+                    } : _teacherService.GetTeacherById(TeacherId).Result,
+                    LessonGroup = _lessonService.GetAllActiveLesson().Result
                 };
                 return View(model);
             }
             catch (Exception e)
             {
 
-                return View(new StudentModel());
+                return View(new TeacherModel());
             }
         }
 
-
-        [Route("duzenle/{StudentId}")]
+        [Route("duzenle/{TeacherId}")]
         [HttpPost]
-        public JsonResult StudentEdit(int StudentId, StudentModel StudentModel)
+        public JsonResult TeacherEdit(int TeacherId, TeacherModel TeacherModel)
         {
             try
             {
-                if (StudentId == 0)
+                if (TeacherId == 0)
                 {
-                    Core3Base.Infra.Data.Entity.Student Student = new Core3Base.Infra.Data.Entity.Student
+                    Core3Base.Infra.Data.Entity.Teacher Teacher = new Core3Base.Infra.Data.Entity.Teacher
                     {
-                        Name = StudentModel.Student.Name,
-                        Email = StudentModel.Student.Email,
-                        ClassId = StudentModel.Student.ClassId,
-                        IsActive = StudentModel.Student.IsActive,
-                        Surname = StudentModel.Student.Surname
+                        Name = TeacherModel.Teacher.Name,
+                        Email = TeacherModel.Teacher.Email,
+                        IsActive = TeacherModel.Teacher.IsActive,
+                        SurName = TeacherModel.Teacher.SurName,
+                        LessonId= TeacherModel.Teacher.LessonId
                     };
-                     
 
-                    return Json(_studentService.Add(Student).HttpGetResponse());
+
+                    return Json(_teacherService.Add(Teacher).HttpGetResponse());
                 }
                 else
                 {
-                    var Student = _studentService.GetStudentById(StudentId).Result;
-                    Student.Name = StudentModel.Student.Name;
-                    Student.Email = StudentModel.Student.Email;
-                    Student.ClassId = StudentModel.Student.ClassId;
-                    Student.IsActive = StudentModel.Student.IsActive;
-                    Student.Surname = StudentModel.Student.Surname;
-                    Student.DateModified = DateTime.Now;
-                     
-                    return  Json(_studentService.Update(Student).HttpGetResponse());
-                  
+                    var Teacher = _teacherService.GetTeacherById(TeacherId).Result;
+
+                    Teacher.Name = TeacherModel.Teacher.Name;
+                    Teacher.Email = TeacherModel.Teacher.Email;
+                    Teacher.IsActive = TeacherModel.Teacher.IsActive;
+                    Teacher.SurName = TeacherModel.Teacher.SurName;
+                    Teacher.LessonId = TeacherModel.Teacher.LessonId;
+                    Teacher.DateModified = DateTime.Now;
+
+                    return Json(_teacherService.Update(Teacher).HttpGetResponse());
+
 
                 }
             }
@@ -127,19 +127,17 @@ namespace Student.Web.Controllers
             }
         }
 
-
-
         [HttpGet]
-        public bool StudentActiveChange(int id, bool active)
+        public bool TeacherActiveChange(int id, bool active)
         {
             try
             {
                 string sonuc = "";
-                var StudentResponse = _studentService.GetStudentById(id);
-                if (StudentResponse.IsSucceeded)
+                var TeacherResponse = _teacherService.GetTeacherById(id);
+                if (TeacherResponse.IsSucceeded)
                 {
-                    var Student = StudentResponse.Result;
-                    Student.IsActive = active;
+                    var Teacher = TeacherResponse.Result;
+                    Teacher.IsActive = active;
                     if (active)
                     {
                         sonuc = "aktif";
@@ -148,10 +146,8 @@ namespace Student.Web.Controllers
                     {
                         sonuc = "pasif";
                     }
-
-                   _studentService.Update(Student);
+                    _teacherService.Update(Teacher);
                 }
-
             }
             catch (Exception e)
             {
@@ -159,6 +155,8 @@ namespace Student.Web.Controllers
             }
             return true;
         }
+
+
         #region Delete
 
         [Route("secilmislerisil/{ids}")]
@@ -180,7 +178,7 @@ namespace Student.Web.Controllers
                     var silinecekler = ids.Split(',');
                     for (int i = 0; i < silinecekler.Length; i++)
                     {
-                        _studentService.Delete(Convert.ToInt32(silinecekler[i]));
+                        _teacherService.Delete(Convert.ToInt32(silinecekler[i]));
                     }
                     return true;
                 }
@@ -195,15 +193,13 @@ namespace Student.Web.Controllers
             }
         }
 
-
-
         [Route("sil/{id}")]
         [HttpGet]
         public bool StudentDelete(int id)
         {
             try
             {
-               _studentService.Delete(id);
+                _teacherService.Delete(id);
             }
             catch (Exception e)
             {

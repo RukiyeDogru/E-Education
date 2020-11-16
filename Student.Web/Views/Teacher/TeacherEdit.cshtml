@@ -1,39 +1,39 @@
-﻿@model StudentModel
+﻿@model TeacherModel
 @{
     Layout = null;
 }
 
 <div class="row">
     <div class="col-lg-12">
-        <form data-provide="jqueryform" id="StudentForm" action="@Url.Action("StudentEdit",new{StudentId = Model.Student.Id})" method="post">
+        <form data-provide="jqueryform" id="TeacherForm" action="@Url.Action("TeacherEdit",new{TeacherId = Model.Teacher.Id})" method="post">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Name </label>
-                                @Html.TextBoxFor(model => model.Student.Name, new { @class = "form-control", placeholder = "Enter Student Name", required = "" })
-                                @Html.HiddenFor(model => model.Student.Id)
+                                <label>Name</label>
+                                @Html.TextBoxFor(model => model.Teacher.Name, new { @class = "form-control", placeholder = "Enter Teacher Name", required = "" })
+                                @Html.HiddenFor(model => model.Teacher.Id)
                             </div>
                             <div class="form-group">
-                                <label>Surname </label>
-                                @Html.TextBoxFor(model => model.Student.Surname, new { @class = "form-control", placeholder = "Enter Student Surname", required = "" })
+                                <label>SurName </label>
+                                @Html.TextBoxFor(model => model.Teacher.SurName, new { @class = "form-control", placeholder = "Enter Teacher Surname", required = "" })
                             </div>
                             <div class="form-group">
                                 <label>Email </label>
-                                @Html.TextBoxFor(model => model.Student.Email, new { @class = "form-control", placeholder = "Enter Student Email", required = "" })
+                                @Html.TextBoxFor(model => model.Teacher.Email, new { @class = "form-control", placeholder = "Enter Teacher Email", required = "" })
                             </div>
 
                             <div class="form-group">
-                                <label>Student Class Name</label>
-                                @Html.DropDownListFor(model => model.Student.ClassId, new SelectList(Model.ClasGroup, "Id", "ClassName"), "Choose Student Class", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })
+                                <label>Teacher Lesson Name</label>
+                                @Html.DropDownListFor(model => model.Teacher.LessonId, new SelectList(Model.LessonGroup, "Id", "LessonName"), "Choose Teacher Lesson", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })
                             </div>
 
                         </div>
 
                         <div class="form-group">
                             <label class="switch switch-lg switch-success">
-                                @Html.CheckBoxFor(model => model.Student.IsActive, new { @class = "parent pr2" })
+                                @Html.CheckBoxFor(model => model.Teacher.IsActive, new { @class = "parent pr2" })
                                 <span class="switch-indicator"></span>
                                 <span class="switch-description">
                                     Active
@@ -58,13 +58,13 @@
 <script src="~/Assets/vendor/jquery-validation/additional-methods.js"></script>
 <script data-provide="sweetalert">
     $(function () {
-        $("#StudentForm").validate({
+        $("#TeacherForm").validate({
             ignore: ".ignore",
             rules: {
-                "@(Html.NameFor(model => model.Student.Name))": { required: true },
-                "@(Html.NameFor(model => model.Student.Email))": { required: true },
-                "@(Html.NameFor(model => model.Student.Surname))": { required: true },
-                "@(Html.NameFor(model => model.Student.ClassId))": { required: true}
+                "@(Html.NameFor(model => model.Teacher.Name))": { required: true },
+                "@(Html.NameFor(model => model.Teacher.Email))": { required: true },
+                "@(Html.NameFor(model => model.Teacher.SurName))": { required: true },
+                "@(Html.NameFor(model => model.Teacher.LessonId))": { required: true}
                 }
             });
     });
@@ -74,11 +74,11 @@
 <script>
     $('form').on('submit', function (e) {
         e.preventDefault();
-        if ($("#StudentForm").valid()) {
+        if ($("#TeacherForm").valid()) {
             LoadingRun();
             $(this).ajaxSubmit({
                 success: function (responseText) {
-                    LoadingStop();
+                    LoadingStop(); 
                     if (responseText.value.validErrors || responseText.value.errorMessage) {
 
                         var errorMessage = "";
@@ -102,9 +102,9 @@
                         });
                         $('.close').click();
                         ReloadTable();
-                    }
+                    }  
                 },
-                error: function (responseText) {
+                error: function (responseText) { 
                     LoadingStop();
                     var errorMessage = "";
                     $.each(responseText.value.validErrors, function (i, l) {
