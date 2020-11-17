@@ -15,7 +15,7 @@ namespace Core3Base.Domain.Services.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<Answer> GetAnswerById(int id);
         ServiceResponse<List<Answer>> GetAnswers(AnswerFilterModel filter);
-
+      
         ServiceResponse<DataTablesModel.DataTableReturnModel> GetAllForDatatables(
           DataTablesModel.DataTableAjaxPostModel model);
     }

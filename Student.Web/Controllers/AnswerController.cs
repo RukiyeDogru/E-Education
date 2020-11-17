@@ -10,6 +10,8 @@ using Student.Web.Models;
 
 namespace Student.Web.Controllers
 {
+    [Route("cevap")]
+
     public class AnswerController : Controller
     {
         private IAnswerService _answerService;
@@ -56,11 +58,11 @@ namespace Student.Web.Controllers
         [HttpGet]
         public ActionResult AnswerCreate()
         {
-            return RedirectToAction("AnswerEdit", new { StudentId = 0 });
+            return RedirectToAction("AnswerEdit", new {AnswerId = 0 });
         }
 
 
-        [Route("duzenle/{StudentId}")]
+        [Route("duzenle/{AnswerId}")]
         [HttpGet]
         public ActionResult AnswerEdit(int AnswerId)
         {
@@ -74,49 +76,42 @@ namespace Student.Web.Controllers
                         IsActive = true,
                         Id = 0
                     } : _answerService.GetAnswerById(AnswerId).Result,
-                      QuestionGroup = _.GetAllActiveClasss().Result
+                      QuestionGroup = QuestionService.GetAllActiveQuestion().Result
                 };
                 return View(model);
             }
             catch (Exception e)
             {
 
-                return View(new StudentModel());
+                return View(new AnswerModel());
             }
         }
 
 
-        [Route("duzenle/{StudentId}")]
+        [Route("duzenle/{AnswerId}")]
         [HttpPost]
-        public JsonResult StudentEdit(int StudentId, StudentModel StudentModel)
+        public JsonResult AnswerEdit(int AnswerId, AnswerModel AnswerModel)
         {
             try
             {
-                if (StudentId == 0)
+                if (AnswerId == 0)
                 {
-                    Core3Base.Infra.Data.Entity.Student Student = new Core3Base.Infra.Data.Entity.Student
+                    Core3Base.Infra.Data.Entity.Answer Answer = new Core3Base.Infra.Data.Entity.Answer
                     {
-                        Name = StudentModel.Student.Name,
-                        Email = StudentModel.Student.Email,
-                        ClassId = StudentModel.Student.ClassId,
-                        IsActive = StudentModel.Student.IsActive,
-                        Surname = StudentModel.Student.Surname
+                        Responce=AnswerModel.Answer.Responce,
+                        IsActive = AnswerModel.Answer.IsActive,
                     };
 
 
-                    return Json(_studentService.Add(Student).HttpGetResponse());
+                    return Json(_answerService.Add(Answer).HttpGetResponse());
                 }
                 else
                 {
                     var Answer = _answerService.GetAnswerById(AnswerId).Result;
-                    Answer.Responce = AnswerModel;
-                    Student.Email = StudentModel.Student.Email;
-                    Student.ClassId = StudentModel.Student.ClassId;
-                    Student.IsActive = StudentModel.Student.IsActive;
-                    Student.Surname = StudentModel.Student.Surname;
-                    Student.DateModified = DateTime.Now;
+                    Answer.Responce = AnswerModel.Answer.Responce;
+                    Answer.IsActive = AnswerModel.Answer.IsActive;
 
-                    return Json(_answerService.Update(Student).HttpGetResponse());
+                    return Json(_answerService.Update(Answer).HttpGetResponse());
 
 
                 }
@@ -130,7 +125,7 @@ namespace Student.Web.Controllers
 
 
         [HttpGet]
-        public bool StudentActiveChange(int id, bool active)
+        public bool AnswerActiveChange(int id, bool active)
         {
             try
             {
@@ -199,7 +194,7 @@ namespace Student.Web.Controllers
 
         [Route("sil/{id}")]
         [HttpGet]
-        public bool StudentDelete(int id)
+        public bool AnswerDelete(int id)
         {
             try
             {

@@ -1,4 +1,5 @@
 ﻿using Core3Base.Domain.Filters;
+using Core3Base.Domain.Model;
 using Core3Base.Domain.Model.Base;
 using Core3Base.Domain.Services.Impl.Helper;
 using Core3Base.Domain.Services.Services;
@@ -8,6 +9,8 @@ using Core3Base.Infra.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using System.Linq.Dynamic.Core;
 using System.Text;
 
 namespace Core3Base.Domain.Services.Impl.Services
@@ -48,6 +51,58 @@ namespace Core3Base.Domain.Services.Impl.Services
             }
             return response;
 
+        }
+
+        public ServiceResponse<DataTablesModel.DataTableReturnModel> GetAllForDatatables(DataTablesModel.DataTableAjaxPostModel model)
+        {
+            var searchBy = model.search?.value;
+            var take = model.length;
+            var skip = model.start;
+
+            var sortBy = "Id";
+            var sortDir = "desc";
+            if (model.order != null)
+            {
+                sortBy = model.columns[model.order[0].column].data;
+                sortDir = model.order[0].dir.ToLower();
+            }
+
+            var response = new ServiceResponse<DataTablesModel.DataTableReturnModel>();
+
+            var repoResponse = ExamRepository.AllListQueryable(r => !r.IsDelete).Select(x => new
+            {
+                Id = x.Id,
+                IsActive = x.IsActive,
+                ExamName = x.ExamName,
+            });
+
+            var totalResultsCount = repoResponse.Count();
+            var filteredResultsCount = repoResponse.Count();
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                repoResponse = repoResponse.Where(r => r.ExamName.Contains(searchBy));
+                filteredResultsCount = repoResponse.Count();
+            }
+            repoResponse = repoResponse.OrderBy($"{sortBy} {sortDir}").Skip(skip).Take(take);
+
+            if (repoResponse != null)
+            {
+                response.Result = new DataTablesModel.DataTableReturnModel
+                {
+                    draw = model.draw,
+                    recordsTotal = totalResultsCount,
+                    recordsFiltered = filteredResultsCount,
+                    data = repoResponse.ToList()
+                };
+
+            }
+            else
+            {
+                response.SetError("Kayıt bulunamadı");
+            }
+
+            return response;
         }
 
         public ServiceResponse<Exam> GetExamById(int id)

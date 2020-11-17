@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core3Base.Domain.Filters;
 using Core3Base.Domain.Model;
 using Core3Base.Domain.Services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,35 +9,36 @@ using Student.Web.Models;
 
 namespace Student.Web.Controllers
 {
-    [Route("ogrenci")]
-    public class StudentController : Controller
+    [Route("dersler")]
+    public class LessonController : Controller
     {
-        private IStudentService _studentService;
-        private IClasssService _classsService;
+        private ILessonService _LessonService;
 
-        public StudentController(IStudentService studentService, IClasssService classsService)
+
+        public LessonController(ILessonService LessonService)
         {
-            _studentService = studentService;
-            _classsService = classsService;
+            _LessonService = LessonService;
+
         }
 
         [Route("liste")]
         [HttpGet]
-        public ActionResult StudentList()
+        public ActionResult LessonList()
         {
-            var model = new StudentModel
+            var model = new LessonModel
             {
-                Students = new List<Core3Base.Infra.Data.Entity.Student>()
+                Lessons = new List<Core3Base.Infra.Data.Entity.Lesson>()
             };
             return View(model);
         }
-        [Route("student-query")]
+
+        [Route("Lesson-query")]
         [HttpPost]
-        public JsonResult StudentListQuery(DataTablesModel.DataTableAjaxPostModel model)
+        public JsonResult LessonListQuery(DataTablesModel.DataTableAjaxPostModel model)
         {
             try
             {
-                var data = _studentService.GetAllForDatatables(model);
+                var data = _LessonService.GetAllForDatatables(model);
                 if (data.IsSucceeded)
                 {
                     return Json(data.Result);
@@ -54,68 +54,63 @@ namespace Student.Web.Controllers
 
         [Route("ekle")]
         [HttpGet]
-        public ActionResult StudentCreate()
+        public ActionResult LessonCreate()
         {
-            return RedirectToAction("StudentEdit", new { StudentId = 0 });
+            return RedirectToAction("LessonEdit", new { LessonId = 0 });
         }
 
 
-        [Route("duzenle/{StudentId}")]
+        [Route("duzenle/{LessonId}")]
         [HttpGet]
-        public ActionResult StudentEdit(int StudentId)
+        public ActionResult LessonEdit(int LessonId)
         {
             try
             {
-                var model = new StudentModel
+                var model = new LessonModel
                 {
-                    Student = StudentId == 0 ? new Core3Base.Infra.Data.Entity.Student
+                    Lesson = LessonId == 0 ? new Core3Base.Infra.Data.Entity.Lesson
                     {
                         IsActive = true,
                         Id = 0
-                    } : _studentService.GetStudentById(StudentId).Result,
-                    ClasGroup = _classsService.GetAllActiveClasss().Result
+                    } : _LessonService.GetLessonById(LessonId).Result,
                 };
                 return View(model);
             }
             catch (Exception e)
             {
 
-                return View(new StudentModel());
+                return View(new LessonModel());
             }
         }
 
-
-        [Route("duzenle/{StudentId}")]
+        [Route("duzenle/{LessonId}")]
         [HttpPost]
-        public JsonResult StudentEdit(int StudentId, StudentModel StudentModel)
+        public JsonResult LessonEdit(int LessonId, LessonModel LessonModel)
         {
             try
             {
-                if (StudentId == 0)
+                if (LessonId == 0)
                 {
-                    Core3Base.Infra.Data.Entity.Student Student = new Core3Base.Infra.Data.Entity.Student
+                    Core3Base.Infra.Data.Entity.Lesson Lesson = new Core3Base.Infra.Data.Entity.Lesson
                     {
-                        Name = StudentModel.Student.Name,
-                        Email = StudentModel.Student.Email,
-                        ClassId = StudentModel.Student.ClassId,
-                        IsActive = StudentModel.Student.IsActive,
-                        Surname = StudentModel.Student.Surname
+                        LessonName = LessonModel.Lesson.LessonName,
+                        IsActive = LessonModel.Lesson.IsActive,
                     };
-                     
-                    return Json(_studentService.Add(Student).HttpGetResponse());
+
+
+                    return Json(_LessonService.Add(Lesson).HttpGetResponse());
                 }
                 else
                 {
-                    var Student = _studentService.GetStudentById(StudentId).Result;
-                    Student.Name = StudentModel.Student.Name;
-                    Student.Email = StudentModel.Student.Email;
-                    Student.ClassId = StudentModel.Student.ClassId;
-                    Student.IsActive = StudentModel.Student.IsActive;
-                    Student.Surname = StudentModel.Student.Surname;
-                    Student.DateModified = DateTime.Now;
-                     
-                    return  Json(_studentService.Update(Student).HttpGetResponse());
-                  
+                    var Lesson = _LessonService.GetLessonById(LessonId).Result;
+
+                    Lesson.LessonName = LessonModel.Lesson.LessonName;
+                    Lesson.IsActive = LessonModel.Lesson.IsActive;
+                    Lesson.DateModified = DateTime.Now;
+
+                    return Json(_LessonService.Update(Lesson).HttpGetResponse());
+
+
                 }
             }
             catch (Exception e)
@@ -125,16 +120,16 @@ namespace Student.Web.Controllers
         }
 
         [HttpGet]
-        public bool StudentActiveChange(int id, bool active)
+        public bool LessonActiveChange(int id, bool active)
         {
             try
             {
                 string sonuc = "";
-                var StudentResponse = _studentService.GetStudentById(id);
-                if (StudentResponse.IsSucceeded)
+                var LessonResponse = _LessonService.GetLessonById(id);
+                if (LessonResponse.IsSucceeded)
                 {
-                    var Student = StudentResponse.Result;
-                    Student.IsActive = active;
+                    var Lesson = LessonResponse.Result;
+                    Lesson.IsActive = active;
                     if (active)
                     {
                         sonuc = "aktif";
@@ -143,10 +138,8 @@ namespace Student.Web.Controllers
                     {
                         sonuc = "pasif";
                     }
-
-                   _studentService.Update(Student);
+                    _LessonService.Update(Lesson);
                 }
-
             }
             catch (Exception e)
             {
@@ -154,6 +147,8 @@ namespace Student.Web.Controllers
             }
             return true;
         }
+
+
         #region Delete
 
         [Route("secilmislerisil/{ids}")]
@@ -175,7 +170,7 @@ namespace Student.Web.Controllers
                     var silinecekler = ids.Split(',');
                     for (int i = 0; i < silinecekler.Length; i++)
                     {
-                        _studentService.Delete(Convert.ToInt32(silinecekler[i]));
+                        _LessonService.Delete(Convert.ToInt32(silinecekler[i]));
                     }
                     return true;
                 }
@@ -189,13 +184,14 @@ namespace Student.Web.Controllers
                 return false;
             }
         }
+
         [Route("sil/{id}")]
         [HttpGet]
         public bool StudentDelete(int id)
         {
             try
             {
-               _studentService.Delete(id);
+                _LessonService.Delete(id);
             }
             catch (Exception e)
             {

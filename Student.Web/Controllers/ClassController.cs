@@ -57,7 +57,7 @@ namespace Class.Web.Controllers
         [HttpGet]
         public ActionResult ClassCreate()
         {
-            return RedirectToAction("ClassEdit", new { StudentId = 0 });
+            return RedirectToAction("ClassEdit", new {ClassId = 0 });
         }
 
         [Route("duzenle/{ClassId}")]

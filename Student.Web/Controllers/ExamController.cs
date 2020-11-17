@@ -9,38 +9,38 @@ using Student.Web.Models;
 
 namespace Student.Web.Controllers
 {
-    [Route("ogretmen")]
-    public class TeacherController : Controller
+    [Route("sinav")]
+
+    public class ExamController : Controller
     {
-        private ITeacherService _teacherService;
+        private IExamService _ExamService;
         private ILessonService _lessonService;
 
 
-        public TeacherController(ITeacherService teacherService, ILessonService lessonService)
+        public ExamController(IExamService ExamService, ILessonService lessonService)
         {
-            _teacherService = teacherService;
+            _ExamService = ExamService;
             _lessonService = lessonService;
 
         }
 
         [Route("liste")]
         [HttpGet]
-        public ActionResult TeacherList()
+        public ActionResult ExamList()
         {
-            var model = new TeacherModel
+            var model = new ExamModel
             {
-                Teachers = new List<Core3Base.Infra.Data.Entity.Teacher>()
+                Exams = new List<Core3Base.Infra.Data.Entity.Exam>()
             };
             return View(model);
         }
-
-        [Route("teacher-query")]
+        [Route("Exam-query")]
         [HttpPost]
-        public JsonResult TeacherListQuery(DataTablesModel.DataTableAjaxPostModel model)
+        public JsonResult ExamListQuery(DataTablesModel.DataTableAjaxPostModel model)
         {
             try
             {
-                var data = _teacherService.GetAllForDatatables(model);
+                var data = _ExamService.GetAllForDatatables(model);
                 if (data.IsSucceeded)
                 {
                     return Json(data.Result);
@@ -56,25 +56,25 @@ namespace Student.Web.Controllers
 
         [Route("ekle")]
         [HttpGet]
-        public ActionResult TeacherCreate()
+        public ActionResult ExamCreate()
         {
-            return RedirectToAction("TeacherEdit", new { TeacherId = 0 });
+            return RedirectToAction("ExamEdit", new { ExamId = 0 });
         }
 
 
-        [Route("duzenle/{TeacherId}")]
+        [Route("duzenle/{ExamId}")]
         [HttpGet]
-        public ActionResult TeacherEdit(int TeacherId)
+        public ActionResult ExamEdit(int ExamId)
         {
             try
             {
-                var model = new TeacherModel
+                var model = new ExamModel
                 {
-                    Teacher = TeacherId == 0 ? new Core3Base.Infra.Data.Entity.Teacher
+                    Exam = ExamId == 0 ? new Core3Base.Infra.Data.Entity.Exam
                     {
                         IsActive = true,
                         Id = 0
-                    } : _teacherService.GetTeacherById(TeacherId).Result,
+                    } : _ExamService.GetExamById(ExamId).Result,
                     LessonGroup = _lessonService.GetAllActiveLesson().Result
                 };
                 return View(model);
@@ -82,43 +82,36 @@ namespace Student.Web.Controllers
             catch (Exception e)
             {
 
-                return View(new TeacherModel());
+                return View(new ExamModel());
             }
         }
 
-        [Route("duzenle/{TeacherId}")]
+
+        [Route("duzenle/{ExamId}")]
         [HttpPost]
-        public JsonResult TeacherEdit(int TeacherId, TeacherModel TeacherModel)
+        public JsonResult ExamEdit(int ExamId, ExamModel ExamModel)
         {
             try
             {
-                if (TeacherId == 0)
+                if (ExamId == 0)
                 {
-                    Core3Base.Infra.Data.Entity.Teacher Teacher = new Core3Base.Infra.Data.Entity.Teacher
+                    Core3Base.Infra.Data.Entity.Exam Exam = new Core3Base.Infra.Data.Entity.Exam
                     {
-                        Name = TeacherModel.Teacher.Name,
-                        Email = TeacherModel.Teacher.Email,
-                        IsActive = TeacherModel.Teacher.IsActive,
-                        SurName = TeacherModel.Teacher.SurName,
-                        LessonId= TeacherModel.Teacher.LessonId
+                        ExamName = ExamModel.Exam.ExamName,
+                        IsActive = ExamModel.Exam.IsActive,
+                        
                     };
 
-
-                    return Json(_teacherService.Add(Teacher).HttpGetResponse());
+                    return Json(_ExamService.Add(Exam).HttpGetResponse());
                 }
                 else
                 {
-                    var Teacher = _teacherService.GetTeacherById(TeacherId).Result;
+                    var Exam = _ExamService.GetExamById(ExamId).Result;
+                    Exam.ExamName = ExamModel.Exam.ExamName;
+                    Exam.IsActive = ExamModel.Exam.IsActive;
+                    Exam.DateModified = DateTime.Now;
 
-                    Teacher.Name = TeacherModel.Teacher.Name;
-                    Teacher.Email = TeacherModel.Teacher.Email;
-                    Teacher.IsActive = TeacherModel.Teacher.IsActive;
-                    Teacher.SurName = TeacherModel.Teacher.SurName;
-                    Teacher.LessonId = TeacherModel.Teacher.LessonId;
-                    Teacher.DateModified = DateTime.Now;
-
-                    return Json(_teacherService.Update(Teacher).HttpGetResponse());
-
+                    return Json(_ExamService.Update(Exam).HttpGetResponse());
 
                 }
             }
@@ -128,17 +121,54 @@ namespace Student.Web.Controllers
             }
         }
 
+        [Route("ekle")]
         [HttpGet]
-        public bool TeacherActiveChange(int id, bool active)
+        public ActionResult ExamAddd(ExamModel examModel)
+
+        {
+            return RedirectToAction("ExamEdit", new { ExamId = 0 });
+
+        }
+
+
+        [Route("yeni-ekle/{ExamId}")]
+        [HttpGet]
+        public ActionResult ExamAdded(int ExamId)
+        {
+            try
+            {
+                var model = new ExamModel
+                {
+                    Exam = ExamId == 0 ? new Core3Base.Infra.Data.Entity.Exam
+                    {
+                        IsActive = true,
+                        Id = 0
+                    } : _ExamService.GetExamById(ExamId).Result,
+                    LessonGroup = _lessonService.GetAllActiveLesson().Result
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+
+                return View(new ExamModel());
+            }
+        }
+
+
+
+
+        [HttpGet]
+        public bool ExamActiveChange(int id, bool active)
         {
             try
             {
                 string sonuc = "";
-                var TeacherResponse = _teacherService.GetTeacherById(id);
-                if (TeacherResponse.IsSucceeded)
+                var ExamResponse = _ExamService.GetExamById(id);
+                if (ExamResponse.IsSucceeded)
                 {
-                    var Teacher = TeacherResponse.Result;
-                    Teacher.IsActive = active;
+                    var Exam = ExamResponse.Result;
+                    Exam.IsActive = active;
                     if (active)
                     {
                         sonuc = "aktif";
@@ -147,8 +177,10 @@ namespace Student.Web.Controllers
                     {
                         sonuc = "pasif";
                     }
-                    _teacherService.Update(Teacher);
+
+                    _ExamService.Update(Exam);
                 }
+
             }
             catch (Exception e)
             {
@@ -156,8 +188,6 @@ namespace Student.Web.Controllers
             }
             return true;
         }
-
-
         #region Delete
 
         [Route("secilmislerisil/{ids}")]
@@ -179,7 +209,7 @@ namespace Student.Web.Controllers
                     var silinecekler = ids.Split(',');
                     for (int i = 0; i < silinecekler.Length; i++)
                     {
-                        _teacherService.Delete(Convert.ToInt32(silinecekler[i]));
+                        _ExamService.Delete(Convert.ToInt32(silinecekler[i]));
                     }
                     return true;
                 }
@@ -193,14 +223,13 @@ namespace Student.Web.Controllers
                 return false;
             }
         }
-
         [Route("sil/{id}")]
         [HttpGet]
-        public bool StudentDelete(int id)
+        public bool ExamDelete(int id)
         {
             try
             {
-                _teacherService.Delete(id);
+                _ExamService.Delete(id);
             }
             catch (Exception e)
             {
@@ -211,4 +240,8 @@ namespace Student.Web.Controllers
 
         #endregion
     }
+
+   
+
 }
+

@@ -1,4 +1,5 @@
 ﻿using Core3Base.Domain.Filters;
+using Core3Base.Domain.Model;
 using Core3Base.Domain.Model.Base;
 using Core3Base.Infra.Data.Entity;
 using System;
@@ -14,6 +15,9 @@ namespace Core3Base.Domain.Services.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<Question> GetQuestionById(int id);
         ServiceResponse<List<Question>> GetQuestions(QuestionFilterModel filter);
+        ServiceResponse<List<Question>> GetAllActiveQuestion();
+        ServiceResponse<DataTablesModel.DataTableReturnModel> GetAllForDatatables(
+           DataTablesModel.DataTableAjaxPostModel model);
 
     }
 }

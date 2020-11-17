@@ -1,4 +1,5 @@
 ﻿using Core3Base.Domain.Filters;
+using Core3Base.Domain.Model;
 using Core3Base.Domain.Model.Base;
 using Core3Base.Infra.Data.Entity;
 using System;
@@ -15,7 +16,8 @@ namespace Core3Base.Domain.Services.Services
         ServiceResponse<Lesson> GetLessonById(int id);
         ServiceResponse<List<Lesson>> GetLessons(LessonFilterModel filter);
         ServiceResponse<List<Lesson>> GetAllActiveLesson();
-
+        ServiceResponse<DataTablesModel.DataTableReturnModel> GetAllForDatatables(
+        DataTablesModel.DataTableAjaxPostModel model);
 
     }
 }

@@ -9,6 +9,8 @@ namespace Core3Base.Domain.Filters
     {
         public string Term { get; set; }
         public string RepositoryTerm { get; set; }
+        public bool? Active { get; set; }
+        public bool? Deleted { get; set; }
         public AnswerFilterModel(DataTableParameters dataTableParameters)
             : base(dataTableParameters)
         {

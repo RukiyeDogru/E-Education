@@ -10,6 +10,7 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 
 namespace Core3Base.Domain.Services.Impl.Services
@@ -83,7 +84,7 @@ namespace Core3Base.Domain.Services.Impl.Services
                 repoResponse = repoResponse.Where(r => r.Responce.Contains(searchBy));
                 filteredResultsCount = repoResponse.Count();
             }
-            //repoResponse = repoResponse.OrderBy($"{sortBy} {sortDir}").Skip(skip).Take(take);
+            repoResponse = repoResponse.OrderBy($"{sortBy} {sortDir}").Skip(skip).Take(take);
 
             if (repoResponse != null)
             {
@@ -137,6 +138,8 @@ namespace Core3Base.Domain.Services.Impl.Services
                 if (repositoryResponse != null)
                 {
                     repositoryResponse.Responce =Answer.Responce;
+
+                    repositoryResponse.IsActive = Answer.IsActive;
 
                     response.Result = AnswerRepository.Update(repositoryResponse);
                 }

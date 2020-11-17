@@ -9,6 +9,7 @@ using Core3Base.Infra.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 
 namespace Core3Base.Domain.Services.Impl.Services
@@ -105,7 +106,6 @@ namespace Core3Base.Domain.Services.Impl.Services
                 if (repositoryResponse != null)
                 {
                     repositoryResponse.ClassName =classs.ClassName;
-
                     repositoryResponse.IsActive = classs.IsActive;
                     response.Result = classsRepository.Update(repositoryResponse);
                 }
@@ -137,8 +137,8 @@ namespace Core3Base.Domain.Services.Impl.Services
             var repoResponse = classsRepository.AllListQueryable(r => !r.IsDelete).Select(x => new
             {
                 Id = x.Id,
-                ClassName=x.ClassName,
-
+                IsActive = x.IsActive,
+                ClassName =x.ClassName,
             });
 
             var totalResultsCount = repoResponse.Count();
@@ -149,7 +149,7 @@ namespace Core3Base.Domain.Services.Impl.Services
                 repoResponse = repoResponse.Where(r => r.ClassName.Contains(searchBy));
                 filteredResultsCount = repoResponse.Count();
             }
-            //repoResponse = repoResponse.OrderBy($"{sortBy} {sortDir}").Skip(skip).Take(take);
+            repoResponse = repoResponse.OrderBy($"{sortBy} {sortDir}").Skip(skip).Take(take);
 
             if (repoResponse != null)
             {

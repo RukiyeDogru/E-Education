@@ -1,13 +1,13 @@
-﻿@model StudentModel
+﻿@model SubjectModel
 
 
 <div class="row">
     <div class="col-lg-12">
-        <h4>Student</h4>
+        <h4>Subject</h4>
         <header class="flexbox align-items-center media-list-header bg-transparent b-0 py-16 pl-0" style="width: 100%; padding-top: 0px !important;">
             <div class="flexbox align-items-left" style="width: 100%;">
                 <div class="input-group">
-                    <input type="text" id="input_search" class="form-control" placeholder="Search Student" aria-describedby="basic-addon1">
+                    <input type="text" id="input_search" class="form-control" placeholder="Search Subject" aria-describedby="basic-addon1">
                     <span class="input-group-addon">
                         <i class="fa fa-search"></i>
                     </span>
@@ -16,9 +16,9 @@
 
             <div class="flexbox align-items-right">
                 <div class="btn-group pull-right">
-                    
-                        <button class="btn btn-label btn-info" @(Model.Student?.Id <= 0 ? ("onclick=GetMessage() data-url=#") : ("data-provide=modaler data-url=" + Url.Action("StudentCreate") + "")) title="Add New" data-confirmVisible="false" data-footerVisible="false" data-size="lg" data-title=" Student Form"><label><i class="fa fa-plus"></i></label> Student Form</button>
-                    
+
+                    <button class="btn btn-label btn-info" @(Model.Subject?.Id <= 0 ? ("onclick=GetMessage() data-url=#") : ("data-provide=modaler data-url=" + Url.Action("SubjectCreate") + "")) title="Add New" data-confirmVisible="false" data-footerVisible="false" data-size="lg" data-title=" Subject Form"><label><i class="fa fa-plus"></i></label> Subject Form</button>
+
                 </div>
             </div>
 
@@ -28,22 +28,20 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-
                     <table class="table">
                         <thead>
                             <tr>
                                 <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
-                                <th>Name</th>
-                                <th>Sur Name</th>
+                                <th>SubjectName</th>
                                 <th>Active</th>
                                 <th>Operations</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
-                        <button class="selectedDelete btn btn-danger" style="height: 31px; margin-right: 3px;" tabindex="0" type="button">
-                            Delete All
-                        </button>
+                    <button class="selectedDelete btn btn-danger" style="height: 31px; margin-right: 3px;" tabindex="0" type="button">
+                        Delete All
+                    </button>
                 </div>
             </div>
         </div>
@@ -67,13 +65,12 @@
 
                 ],
                 "ajax": {
-                    url: '@Url.Action("StudentListQuery")',
+                    url: '@Url.Action("SubjectListQuery")',
                     type: 'POST'
                 },
                 "columns": [
-                    { "data": "id" }, 
-                    { "data": "name" },  
-                    { "data": "surname" },  
+                    { "data": "id" },
+                    { "data": "subjectName" },
                     {
                     "data": "id",
                     "render": function (data, type, row) {
@@ -92,8 +89,8 @@
                 {
                     "data": "id",
                     "render": function (data, type, row) {
-                        var editUrl = ReplaceParameters('@Url.Action("StudentEdit", new{StudentId = -1})', data);
-                        var editButton = '<a title="Edit" data-provide="modaler" data-size="lg"  data-title=" Student Form"  data-url="' +
+                        var editUrl = ReplaceParameters('@Url.Action("SubjectEdit", new{ SubjectId = -1})', data);
+                        var editButton = '<a title="Edit" data-provide="modaler" data-size="lg"  data-title=" Subject Form"  data-url="' +
                             editUrl + '" class="table-action hover-danger" href="#"><i class="ti-pencil islem-button"></i></a>';
 
                         var deleteUrl = 'javascript:DeleteItem(' + data + ')';
@@ -102,7 +99,7 @@
                         return editButton + deleteButton;
                     }
                 }
-                       
+
                 ],
                 'columnDefs': [{
                     'targets': 0,
@@ -132,9 +129,9 @@
                 cancelButtonText: 'NO'
             }).then(function () {
                 $.ajax({
-                    url: ReplaceParameters('@Url.Action("StudentDelete", new{id = -1})', id), success: function (result) {
+                    url: ReplaceParameters('@Url.Action("SubjectDelete", new{id = -1})', id), success: function (result) {
                         if (result) {
-                            
+
                             swal({
                                 title: 'Successful!',
                                 text: 'Registration successfully deleted',
@@ -157,9 +154,9 @@
                 $(element).attr("checked","true");
             }
           $.ajax({
-              url: '@Url.Action("StudentActiveChange")?id=' + id + '&active=' + active,
+              url: '@Url.Action("SubjectActiveChange")?id=' + id + '&active=' + active,
               success:function(result) {
-                  
+
                   if (result ) {
                       swal({
                           title: 'Successful!',
@@ -216,7 +213,7 @@
                         url: ReplaceParameters('@Url.Action("SelectedDelete", new{ids = -1})', silinecekler),
                         method: "GET",
                         success: function (response) {
-                            
+
                             if (response ) {
                                 swal({
                                     title: 'Successful!',
