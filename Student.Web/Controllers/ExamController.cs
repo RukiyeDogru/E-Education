@@ -150,8 +150,42 @@ namespace Student.Web.Controllers
             }
             catch (Exception e)
             {
-
                 return View(new ExamModel());
+            }
+        }
+
+
+        [Route("duzenle/{ExamId}")]
+        [HttpPost]
+        public JsonResult ExamAdded(int ExamId, ExamModel ExamModel)
+        {
+            try
+            {
+                if (ExamId == 0)
+                {
+                    Core3Base.Infra.Data.Entity.Exam Exam = new Core3Base.Infra.Data.Entity.Exam
+                    {
+                        ExamName = ExamModel.Exam.ExamName,
+                        IsActive = ExamModel.Exam.IsActive,
+
+                    };
+
+                    return Json(_ExamService.Add(Exam).HttpGetResponse());
+                }
+                else
+                {
+                    var Exam = _ExamService.GetExamById(ExamId).Result;
+                    Exam.ExamName = ExamModel.Exam.ExamName;
+                    Exam.IsActive = ExamModel.Exam.IsActive;
+                    Exam.DateModified = DateTime.Now;
+
+                    return Json(_ExamService.Update(Exam).HttpGetResponse());
+
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
             }
         }
 

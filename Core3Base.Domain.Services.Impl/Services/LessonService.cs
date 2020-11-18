@@ -141,7 +141,6 @@ namespace Core3Base.Domain.Services.Impl.Services
             response.Result = lessonRepository.GetById(id);
 
             return response;
-
         }
 
         public ServiceResponse<List<Lesson>> GetLessons(LessonFilterModel filter)
@@ -165,7 +164,8 @@ namespace Core3Base.Domain.Services.Impl.Services
                 if (repositoryResponse != null)
                 {
                     repositoryResponse.LessonName = lesson.LessonName;
-                   
+                    
+
                     response.Result = lessonRepository.Update(repositoryResponse);
                 }
                 else
