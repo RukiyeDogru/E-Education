@@ -12,6 +12,7 @@ namespace Student.Web.Models
         public Subjects Subject { get; set; }
         public List<Core3Base.Infra.Data.Entity.Subjects> Subjects { get; set; }
         public IEnumerable<Lesson> LessonGroup { get; set; }
+       
 
     }
 }

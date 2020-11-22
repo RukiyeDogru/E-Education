@@ -13,5 +13,8 @@ namespace Core3Base.Infra.Data.Entity
         [ForeignKey("LessonId")]
         public virtual Lesson Lessons { get; set; }
 
+        public int? SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
+        public virtual Subjects Subject { get; set; }
     }
 }

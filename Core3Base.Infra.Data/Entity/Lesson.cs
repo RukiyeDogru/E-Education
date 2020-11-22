@@ -11,6 +11,7 @@ namespace Core3Base.Infra.Data.Entity
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<LessonStudent> LessonStudents { get; set; }
         public virtual ICollection<Exam> Exams { get; set; }
+        public virtual ICollection<Subjects> Subjects { get; set; }
 
    }
 }

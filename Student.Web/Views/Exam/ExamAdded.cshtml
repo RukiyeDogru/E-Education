@@ -7,18 +7,16 @@
             <div class="card-body">
                 <div class="col-md-6 form-group">
                     <div class="form-group">
-                        <label>Lesson Name</label>
-                        <input type="text" id="LessonName" class="form-control" aria-describedby="emailHelp" required="" placeholder="Sınava girilen Dersi giriniz...">
+                        <label>Dersi seçiniz</label>
+                        @Html.DropDownListFor(model => model.Exam.LessonId, new SelectList(Model.LessonGroup, "Id", "LessonName"), "Choose ders ", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })
                     </div>
-                    <div class="form-group">
-                        <label>Exam Title </label>
-                        <input type="text" id="ExamTitle" class="form-control" aria-describedby="emailHelp" required="" placeholder="Sınav Konusunu giriniz...">
-                    </div>
+                    <label>Konuyu seçiniz</label>
+                    @Html.DropDownListFor( model => model.Exam.Subject, new SelectList(Model.SubjectGroup, "Id", "SubjectName"), "Choose konu ", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })
                     <h4 class="card-title">Sorular Ve Cevapları</h4>
                     <label for="Soru" style="font-weight: bold" id="SoruAl">Soru</label>
                     <input type="text" id="Soru1" class="form-control" aria-describedby="emailHelp" required="" placeholder="Soruyu giriniz...">
                     <br />
-                    <button type="button" onclick="AddKaydet()"  class="btn btn-info w-100">Kaydet</button>
+                    <button type="button" onclick="AddKaydet()" class="btn btn-info w-100">Kaydet</button>
 
                     <button type="button" onclick="alert('Sınav Ekleniyor..')">Send!</button>
                 </div>
@@ -32,7 +30,18 @@
 <script>
 
     function AddKaydet() {
+        $.ajax({
+            type: 'GET',
+            url: 'sinav/yeni-ekle/{ExamId}',
+            //data: postData,
+            success: function (response) {
+                console.log("Geldi");
+            },
+            error: function () {
+                alert("Talep esnasında sorun oluştu.Yeniden deneyin");
 
+            }
+        });
 
 
 

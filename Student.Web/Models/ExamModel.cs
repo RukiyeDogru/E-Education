@@ -11,6 +11,10 @@ namespace Student.Web.Models
         public Exam Exam { get; set; }
         public List<Core3Base.Infra.Data.Entity.Exam> Exams { get; set; }
         public IEnumerable<Lesson> LessonGroup { get; set; }
+      
+        public List<Subjects> Subjects { get; set; }
+        public IEnumerable<Subjects> SubjectGroup { get; set; }
+       
 
     }
 }
