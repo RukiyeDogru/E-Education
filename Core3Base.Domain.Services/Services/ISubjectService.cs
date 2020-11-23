@@ -14,6 +14,7 @@ namespace Core3Base.Domain.Services.Services
         ServiceResponse<Subjects> Update(Subjects Subjects);
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<Subjects> GetSubjectById(int id);
+        ServiceResponse<List<Subjects>> GetAllActiveSubject();
         ServiceResponse<List<Subjects>> GetSubjects(SubjectFilterModel filter);
         ServiceResponse<DataTablesModel.DataTableReturnModel> GetAllForDatatables(
            DataTablesModel.DataTableAjaxPostModel model);

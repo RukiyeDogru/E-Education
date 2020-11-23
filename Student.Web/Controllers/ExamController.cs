@@ -15,12 +15,13 @@ namespace Student.Web.Controllers
     {
         private IExamService _ExamService;
         private ILessonService _lessonService;
+        private ISubjectService _subjectService;
 
-
-        public ExamController(IExamService ExamService, ILessonService lessonService)
+        public ExamController(IExamService ExamService, ILessonService lessonService, ISubjectService subjectService)
         {
             _ExamService = ExamService;
             _lessonService = lessonService;
+            _subjectService = subjectService;
 
         }
 
@@ -144,7 +145,8 @@ namespace Student.Web.Controllers
                         IsActive = true,
                         Id = 0
                     } : _ExamService.GetExamById(ExamId).Result,
-                    LessonGroup = _lessonService.GetAllActiveLesson().Result
+                    LessonGroup = _lessonService.GetAllActiveLesson().Result,
+                    SubjectGroup=_subjectService.GetAllActiveSubject().Result
                 };
                 return View(model);
             }
@@ -188,8 +190,6 @@ namespace Student.Web.Controllers
                 return Json(e.Message);
             }
         }
-
-
 
 
         [HttpGet]

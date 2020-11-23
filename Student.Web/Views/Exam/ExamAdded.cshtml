@@ -11,21 +11,63 @@
                         @Html.DropDownListFor(model => model.Exam.LessonId, new SelectList(Model.LessonGroup, "Id", "LessonName"), "Choose ders ", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })
                     </div>
                     <label>Konuyu seçiniz</label>
-                    @Html.DropDownListFor( model => model.Exam.Subject, new SelectList(Model.SubjectGroup, "Id", "SubjectName"), "Choose konu ", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })
-                    <h4 class="card-title">Sorular Ve Cevapları</h4>
-                    <label for="Soru" style="font-weight: bold" id="SoruAl">Soru</label>
-                    <input type="text" id="Soru1" class="form-control" aria-describedby="emailHelp" required="" placeholder="Soruyu giriniz...">
-                    <br />
+                    @Html.DropDownListFor(model => model.Exam.Subject.LessonId, new SelectList(Model.SubjectGroup, "Id", "SubjectName"), "Choose konu ", new { @class = "form-control", data_live_search = "true", data_provide = "selectpicker", data_size = "10" })
+
+
+                    <div class="form-group">
+                        <label for="DersKonuBaslik">Ders-Konu Başlığını giriniz.</label>
+                        <input type="text" class="form-control  popoverelement disabledInput" required="" id="DersKonu" placeholder="Dersin Konusunu Giriniz">
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-header">
+                            SORULAR
+                            <input class="btn btn-primary" type="button" value="Soru Ekle" id="BtnSoruEkle" onclick="questionAdded()">
+                        </div>
+                        <div id="questionsArea">
+                            <div class="card questionItemDiv">
+                                <div class="card-header">
+                                    Soru 1
+                                    <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove()">
+                                </div>
+                                <div class="form-group">
+                                    <textarea rows="2" cols="60" style="overflow: auto;"></textarea>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="ASecenegi">A)</label>
+                                    <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
+                                    <input class="btn btn-primary" type="button" value="-" id="btnA">
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="BSecenegi">B)</label>
+                                    <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
+                                    <input class="btn btn-primary" type="button" value="-" id="btnB">
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="CSecenegi">C)</label>
+                                    <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
+                                    <input class="btn btn-primary" type="button" value="-" id="btnC">
+
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="DSecenegi">D)</label>
+                                    <input class="w3-input w3-border w3-animate-input" type="text"  style="width:80%">
+                                    <input class="btn btn-primary" type="button" value="-" id="btnD">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button type="button" onclick="AddKaydet()" class="btn btn-info w-100">Kaydet</button>
-
-                    <button type="button" onclick="alert('Sınav Ekleniyor..')">Send!</button>
                 </div>
-
-            </div>
-        </div>
-    </div>
+             </div>
+           </div>
+     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
 
@@ -39,18 +81,20 @@
             },
             error: function () {
                 alert("Talep esnasında sorun oluştu.Yeniden deneyin");
-
             }
         });
-
-
-
-
-
     }
 
+    function questionAdded() {
+        var questionInputsCount = $(".questionItemDiv").length;
 
 
+
+
+
+        $("#questionsArea").append(`<div class="card questionItemDiv"><div class="card-header">Soru ${questionInputsCount+1} <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove()"></div > <div class="form-group"><textarea rows="2" cols="60" style="overflow: auto;"></textarea></div><div class="form-group"><label for="ASecenegi">A)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnA"></div><div class="form-group"><label for="BSecenegi">B)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnB"></div><div class="form-group"><label for="CSecenegi">C)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnC"></div><div class="form-group"><label for="DSecenegi">D)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnD"></div></div>`)
+
+    }
 
 </script>
 

@@ -160,5 +160,29 @@ namespace Core3Base.Domain.Services.Impl.Services
 
 
         }
+
+        public ServiceResponse<List<Subjects>> GetAllActiveSubject()
+        {
+
+            var response = new ServiceResponse<List<Subjects>>();
+            response.IsSucceeded = true;
+            response.RecordsTotal = SubjectsRepository.ListQueryable.Count();
+            response.RecordsFiltered = SubjectsRepository.ListQueryable.AddSearchFilters(new SubjectFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).Count();
+            response.Result = SubjectsRepository.ListQueryable.AddSearchFilters(new SubjectFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).AddOrderAndPageFilters(new SubjectFilterModel
+            {
+                Active = true,
+                Deleted = false
+            }).ToList();
+            return response;
+
+        }
     }
 }
