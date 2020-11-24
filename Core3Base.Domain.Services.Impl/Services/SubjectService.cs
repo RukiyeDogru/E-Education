@@ -155,10 +155,6 @@ namespace Core3Base.Domain.Services.Impl.Services
 
             return response;
 
-
-
-
-
         }
 
         public ServiceResponse<List<Subjects>> GetAllActiveSubject()
