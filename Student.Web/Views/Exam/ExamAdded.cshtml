@@ -26,16 +26,14 @@
                         <div id="questionsArea">
                             <div class="card questionItemDiv" id="questionItemDiv_1">
                                 <div class="card-header" id="questionItemDivHeader_1">
-                               
-                        
-
-
-
+                                     
                                     Soru 1
                                     <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove('questionItemDiv_1')">
+                                    
                                 </div>
                                 <div class="form-group">
                                     <textarea rows="2" cols="60" style="overflow: auto;"></textarea>
+                                    <input class="btn btn-primary" style="float:right" type="button" value="Şık Ekle" id="questionItemEkleSık_1" onclick="SıkEkle()">
                                 </div>
                                 <div class="form-group">
                                     <label for="ASecenegi">A)</label>
@@ -58,7 +56,7 @@
                                     <label for="DSecenegi">D)</label>
                                     <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
                                     <input class="btn btn-primary" type="button" value="-" id="btnD">
-                                    <input class="btn btn-primary" type="button" value="Şık Ekle" id="questionItemEkleSık_1" onclick="SıkEkle()">
+                                   
                                 </div>
                             </div>
                         </div>
@@ -94,23 +92,34 @@
             $(this).attr("id", "questionItemDiv_" + setIndex);
             $($(this).children()[0]).attr("id", "questionItemDivHeader_" + setIndex);
 
-            $("#questionItemDivHeader_" + setIndex).html(`Soru ${setIndex} <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove('questionItemDiv_${setIndex}')">`);
+            $("#questionItemDivHeader_" + setIndex).html(`Soru ${setIndex} <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove('questionItemDiv_${setIndex}')">`); 
 
         });
 
     }
 
     function SıkEkle() {
-        var questionInputsCountIndex = $(".questionItemDiv").length + 1;
-    $("#questionsArea").append(`<label for="ESecenegi">E)</label>
-                                    <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%" </br> </br>`)
+        debugger;
+        $("#questionItemDiv_1").append(`<div class="form-group"><label for="ESecenegi">E)</label>
+                                    <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%" /> <input class="btn btn-primary" type="button" value="-" id="btnD"></div></br></br>`)
+
+      
 
     }
 
+    function SıkEkleGoOn(g) {
+        debugger;
+        $("#" + g).append(`<div class="form-group"><label for="ESecenegi">E)</label>
+                                    <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%" /> <input class="btn btn-primary" type="button" value="-" id="btnD"></div></br></br>`)
+    }
+
     function questionAdded() {
+        debugger;
         var questionInputsCountIndex = $(".questionItemDiv").length + 1;
 
-        $("#questionsArea").append(`<div class="card questionItemDiv" id="questionItemDiv_${questionInputsCountIndex}"><div class="card-header" id="questionItemDivHeader_${questionInputsCountIndex}">Soru ${questionInputsCountIndex} <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove('questionItemDiv_${questionInputsCountIndex}')"></div > <div class="form-group"><textarea rows="2" cols="60" style="overflow: auto;"></textarea></div><div class="form-group"><label for="ASecenegi">A)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnA"></div><div class="form-group"><label for="BSecenegi">B)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnB"></div><div class="form-group"><label for="CSecenegi">C)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnC"></div><div class="form-group"><label for="DSecenegi">D)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnD"></div></div> `)
+        $("#questionsArea").append(`<div class="card questionItemDiv" id="questionItemDiv_${questionInputsCountIndex}"><div class="card-header" id="questionItemDivHeader_${questionInputsCountIndex}">Soru ${questionInputsCountIndex} <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove('questionItemDiv_${questionInputsCountIndex}')"> </div > <div class="form-group"><textarea rows="2" cols="60" style="overflow: auto;"></textarea> <input class="btn btn-primary" style="float: right" type="button" value="Şık Ekle" id="questionItemEkleSık_2" onclick="SıkEkleGoOn('questionItemDiv_${questionInputsCountIndex}')"></div><div class="form-group"><label for="ASecenegi">A)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnA"></div><div class="form-group"><label for="BSecenegi">B)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnB"></div><div class="form-group"><label for="CSecenegi">C)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnC"></div><div class="form-group"><label for="DSecenegi">D)</label><input class="w3-input w3-border w3-animate-input" type="text" style="width:80%"><input class="btn btn-primary" type="button" value="-" id="btnD"></div></div>`)
+
+
     }
 
 </script>
