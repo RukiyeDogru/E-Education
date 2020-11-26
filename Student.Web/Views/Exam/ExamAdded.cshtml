@@ -35,23 +35,23 @@
                                     <textarea rows="2" cols="60" style="overflow: auto;"></textarea>
                                     <input class="btn btn-primary" style="float:right" type="button" value="Şık Ekle" id="questionItemEkleSık_1" onclick="SıkEkle()">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="abtn" onclick="AbutonuSil()">
                                     <label for="ASecenegi">A)</label>
                                     <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
                                     <input class="btn btn-primary" type="button" value="-" id="btnA">
 
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group"  id="bbtn" onclick="BbutonuSil()" >
                                     <label for="BSecenegi">B)</label>
                                     <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
                                     <input class="btn btn-primary" type="button" value="-" id="btnB">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="cbtn" onclick="CbutonuSil()">
                                     <label for="CSecenegi">C)</label>
                                     <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
                                     <input class="btn btn-primary" type="button" value="-" id="btnC">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="dbtn" onclick="DbutonuSil()">
 
                                     <label for="DSecenegi">D)</label>
                                     <input class="w3-input w3-border w3-animate-input" type="text" style="width:80%">
@@ -95,6 +95,34 @@
             $("#questionItemDivHeader_" + setIndex).html(`Soru ${setIndex} <input class="btn btn-danger" type="button" value="Sil" onclick="questionRemove('questionItemDiv_${setIndex}')">`); 
 
         });
+
+    }
+
+
+    function AbutonuSil() {
+
+        $("#abtn").empty();
+
+
+    }
+
+    function BbutonuSil() {
+
+        $("#bbtn").empty();
+
+    }
+
+    function CbutonuSil() {
+
+        $("#cbtn").empty();
+
+
+    }
+
+    function DbutonuSil() {
+
+        $("#dbtn").empty();
+
 
     }
 
